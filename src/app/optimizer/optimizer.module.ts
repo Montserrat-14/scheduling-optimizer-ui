@@ -7,11 +7,12 @@ import { EvaluationComponent } from './evaluation/evaluation.component';
 import { DurationComponent } from './duration/duration.component';
 import { ConfirmationComponent } from './confirmation/confirmation.component';
 import { SolutionComponent } from './solution/solution.component';
+import { MainComponent } from './main/main.component';
 
 
 @NgModule({
-  declarations: [HomeComponent, VariablesComponent, EvaluationComponent, DurationComponent, ConfirmationComponent, SolutionComponent],
-  imports: [,
+  declarations: [HomeComponent, VariablesComponent, EvaluationComponent, DurationComponent, ConfirmationComponent, SolutionComponent, MainComponent],
+  imports: [
     OptimizerRoutingModule
   ]
 })
