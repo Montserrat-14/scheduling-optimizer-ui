@@ -1,0 +1,18 @@
+mat-nav-list#list-horizontal {
+  display: flex;
+  flex-direction: row;
+}
+
+.active-link {
+  color: #10D48E;
+  text-decoration: underline;
+}
+
+.logo-container {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.logo-container span {
+  color: #10D48E;
+}

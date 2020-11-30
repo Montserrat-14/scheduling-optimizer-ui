@@ -1,1 +1,13 @@
-<p>header works!</p>
+<div class="toolbar" role="banner">
+  <div class="logo-container">
+    <span>System-Optimizer</span>
+  </div>
+
+  <mat-nav-list id="list-horizontal">
+    <a mat-list-item routerLink="{{link}}" routerLinkActive="active-link" *ngFor="let link of links"> {{ link | titlecase }} </a>
+  </mat-nav-list>
+
+  <div class="logo-container">
+    <span>System-Optimizer</span>
+  </div>
+</div>
