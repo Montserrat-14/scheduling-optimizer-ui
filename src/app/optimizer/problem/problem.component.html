@@ -1,0 +1,22 @@
+<mat-horizontal-stepper [linear]="isLinear" #stepper>
+  <mat-step [stepControl]="description.descriptionForm" label="Description">
+    <app-description #description></app-description>
+  </mat-step>
+  <mat-step [stepControl]="(problemService.variables$ | async)" label="Variables">
+    <app-variables #variables></app-variables>
+  </mat-step>
+  <mat-step [stepControl]="(problemService.evaluation$ | async)" label="Evaluation">
+    <app-evaluation #evaluation></app-evaluation>
+  </mat-step>
+  <mat-step [stepControl]="(problemService.duration$ | async)" label="Duration">
+    <app-duration #duration></app-duration>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Confirmation</ng-template>
+    <p>You are now done.</p>
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button (click)="stepper.reset()">Reset</button>
+    </div>
+  </mat-step>
+</mat-horizontal-stepper>
