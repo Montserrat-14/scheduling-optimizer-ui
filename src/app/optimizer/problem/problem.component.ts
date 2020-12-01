@@ -26,6 +26,12 @@ export class ProblemComponent implements OnInit {
       : null;
   }
 
+  get formVariables() {
+    return this.variablesComponent
+      ? this.variablesComponent.variablesForm
+      : null;
+  }
+
   constructor(public problemService: ProblemService) {}
 
   ngOnInit(): void {}
