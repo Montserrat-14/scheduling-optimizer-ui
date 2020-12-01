@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-duration',
@@ -6,10 +7,21 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./duration.component.css']
 })
 export class DurationComponent implements OnInit {
+  public durationForm: FormGroup;
 
-  constructor() { }
+  constructor(
+    private _formBuilder: FormBuilder
+  ) {
+    this.durationForm = this._formBuilder.group({
+      duration: ['', Validators.required]
+    });
+  }
 
   ngOnInit(): void {
+  }
+
+  formatLabel(value: number) {
+    return value + ' m';
   }
 
 }

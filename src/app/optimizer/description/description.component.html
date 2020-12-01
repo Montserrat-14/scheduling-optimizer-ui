@@ -1,0 +1,14 @@
+<form [formGroup]="descriptionForm">
+  <ng-template matStepLabel>Fill out your name</ng-template>
+  <mat-form-field appearance="outline">
+    <mat-label>Name</mat-label>
+    <input matInput placeholder="Name of the problem" formControlName="name" required>
+  </mat-form-field>
+  <mat-form-field appearance="outline" class="textareaForm">
+    <mat-label>Description</mat-label>
+    <textarea matInput placeholder="Description of the problem" formControlName="description" required></textarea>
+  </mat-form-field>
+  <div class="buttonArea">
+    <button mat-raised-button color="primary" matStepperNext>Next</button>
+  </div>
+</form>

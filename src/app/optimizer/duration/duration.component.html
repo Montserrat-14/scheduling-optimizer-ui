@@ -1,1 +1,15 @@
-<p>duration works!</p>
+<h3 class="mat-title">Solution Duration:</h3>
+<form [formGroup]="durationForm">
+  <mat-slider
+  style="min-width: 100%;"
+  thumbLabel
+  [displayWith]="formatLabel"
+  tickInterval="1"
+  min="1"
+  max="60"></mat-slider>
+</form>
+
+<div class="buttonArea">
+  <button mat-raised-button matStepperPrevious>Back</button>
+  <button mat-raised-button color="primary" matStepperNext>Next</button>
+</div>
