@@ -18,6 +18,7 @@ import { CommonModule } from '@angular/common';
 
 import { MatTableModule } from '@angular/material/table';
 import { MatSelectModule } from '@angular/material/select';
+import {MatSliderModule} from '@angular/material/slider';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { MatSelectModule } from '@angular/material/select';
     MatStepperModule,
     MatButtonModule,
     MatTableModule,
-    MatSelectModule
+    MatSelectModule,
+    MatSliderModule
   ],
 })
 export class OptimizerModule {}

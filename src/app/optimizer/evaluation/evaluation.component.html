@@ -1,1 +1,15 @@
-<p>evaluation works!</p>
+<form [formGroup]="evaluationForm">
+  <ng-template matStepLabel>Fill out your name</ng-template>
+  <mat-form-field appearance="outline">
+    <mat-label>Solution Endpoint:</mat-label>
+    <input matInput placeholder="Endpoint for the evaluation" formControlName="endpoint" required>
+  </mat-form-field>
+  <mat-form-field appearance="outline" class="textareaForm">
+    <mat-label>Solution Payload:</mat-label>
+    <textarea matInput placeholder="Payload of the service" formControlName="payload" required></textarea>
+  </mat-form-field>
+  <div class="buttonArea">
+    <button mat-raised-button matStepperPrevious>Back</button>
+    <button mat-raised-button color="primary" matStepperNext>Next</button>
+  </div>
+</form>

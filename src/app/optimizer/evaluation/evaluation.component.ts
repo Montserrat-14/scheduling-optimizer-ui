@@ -15,7 +15,7 @@ export class EvaluationComponent implements OnInit {
     this.evaluationForm = this._formBuilder.group({
       endpoint: ['', Validators.required],
       payload: ['', Validators.required]
-    });
+    }, { updateOn: 'blur' });
   }
 
   ngOnInit(): void {

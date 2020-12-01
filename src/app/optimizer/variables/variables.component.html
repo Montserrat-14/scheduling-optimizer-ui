@@ -6,6 +6,7 @@
   </mat-form-field>
 
   <h3 class="mat-title">Decision Variables:</h3>
+
   <table mat-table #_matTable [dataSource]="myDataSource" formArrayName="variables">
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef> Name </th>
@@ -74,7 +75,8 @@
     ADD
   </button>
 
-  <div>
+  <div class="buttonArea">
+    <button mat-raised-button matStepperPrevious>Back</button>
     <button mat-raised-button color="primary" matStepperNext>Next</button>
   </div>
 </form>

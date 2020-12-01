@@ -14,9 +14,9 @@
   <mat-step>
     <ng-template matStepLabel>Confirmation</ng-template>
     <p>You are now done.</p>
-    <div>
-      <button mat-button matStepperPrevious>Back</button>
-      <button mat-button (click)="stepper.reset()">Reset</button>
+    <div class="buttonArea">
+      <button mat-raised-button matStepperPrevious>Back</button>
+      <button mat-raised-button (click)="stepper.reset()">Reset</button>
     </div>
   </mat-step>
 </mat-horizontal-stepper>

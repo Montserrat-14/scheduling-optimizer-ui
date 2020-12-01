@@ -307,3 +307,9 @@ svg#clouds {
 mat-form-field.textareaForm div {
   width: 100%;
 }
+
+.buttonArea {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+}

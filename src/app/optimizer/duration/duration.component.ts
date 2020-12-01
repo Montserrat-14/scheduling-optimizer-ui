@@ -20,4 +20,8 @@ export class DurationComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  formatLabel(value: number) {
+    return value + ' m';
+  }
+
 }

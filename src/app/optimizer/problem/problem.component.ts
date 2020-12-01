@@ -32,6 +32,18 @@ export class ProblemComponent implements OnInit {
       : null;
   }
 
+  get formEvaluation() {
+    return this.evaluationComponent
+      ? this.evaluationComponent.evaluationForm
+      : null;
+  }
+
+  get formDuration() {
+    return this.durationComponent
+      ? this.durationComponent.durationForm
+      : null;
+  }
+
   constructor(public problemService: ProblemService) {}
 
   ngOnInit(): void {}
