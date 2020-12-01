@@ -4,11 +4,11 @@
     <mat-label>Name</mat-label>
     <input matInput placeholder="Name of the problem" formControlName="name" required>
   </mat-form-field>
-  <mat-form-field appearance="outline">
+  <mat-form-field appearance="outline" class="textareaForm">
     <mat-label>Description</mat-label>
-    <input matInput placeholder="Description of the problem" formControlName="description" required>
+    <textarea matInput placeholder="Description of the problem" formControlName="description" required></textarea>
   </mat-form-field>
   <div>
-    <button mat-button matStepperNext>Next</button>
+    <button mat-raised-button color="primary" matStepperNext>Next</button>
   </div>
 </form>

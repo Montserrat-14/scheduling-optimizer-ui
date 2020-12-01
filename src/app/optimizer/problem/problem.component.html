@@ -2,13 +2,13 @@
   <mat-step [stepControl]="description.descriptionForm" label="Description">
     <app-description #description></app-description>
   </mat-step>
-  <mat-step [stepControl]="(problemService.variables$ | async)" label="Variables">
+  <mat-step [stepControl]="variables.variablesForm" label="Variables">
     <app-variables #variables></app-variables>
   </mat-step>
-  <mat-step [stepControl]="(problemService.evaluation$ | async)" label="Evaluation">
+  <mat-step [stepControl]="evaluation.evaluationForm" label="Evaluation">
     <app-evaluation #evaluation></app-evaluation>
   </mat-step>
-  <mat-step [stepControl]="(problemService.duration$ | async)" label="Duration">
+  <mat-step [stepControl]="duration.durationForm" label="Duration">
     <app-duration #duration></app-duration>
   </mat-step>
   <mat-step>

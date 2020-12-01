@@ -1,1 +1,14 @@
-<p>variables works!</p>
+<form [formGroup]="variablesForm">
+  <ng-template matStepLabel>Fill out your name</ng-template>
+  <mat-form-field appearance="outline">
+    <mat-label>Number of Objectives</mat-label>
+    <input type="number" matInput placeholder="Number of Objectives to Optimize" formControlName="objectives" required>
+  </mat-form-field>
+  <mat-form-field appearance="outline" class="textareaForm">
+    <mat-label>Description</mat-label>
+    <textarea matInput placeholder="Description of the problem" formControlName="variables" required></textarea>
+  </mat-form-field>
+  <div>
+    <button mat-raised-button color="primary" matStepperNext>Next</button>
+  </div>
+</form>

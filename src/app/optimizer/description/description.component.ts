@@ -11,8 +11,7 @@ export class DescriptionComponent implements OnInit {
   public descriptionForm: FormGroup;
 
   constructor(
-    private _formBuilder: FormBuilder,
-    private problemService: ProblemService
+    private _formBuilder: FormBuilder
   ) {
     this.descriptionForm = this._formBuilder.group({
       name: ['', Validators.required],

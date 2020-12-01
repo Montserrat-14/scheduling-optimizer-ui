@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-evaluation',
@@ -6,8 +7,16 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./evaluation.component.css']
 })
 export class EvaluationComponent implements OnInit {
+  public evaluationForm: FormGroup;
 
-  constructor() { }
+  constructor(
+    private _formBuilder: FormBuilder
+  ) {
+    this.evaluationForm = this._formBuilder.group({
+      endpoint: ['', Validators.required],
+      payload: ['', Validators.required]
+    });
+  }
 
   ngOnInit(): void {
   }

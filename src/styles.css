@@ -303,3 +303,7 @@ svg#clouds {
 .mat-form-field {
   display: flex !important;
 }
+
+mat-form-field.textareaForm div {
+  width: 100%;
+}
