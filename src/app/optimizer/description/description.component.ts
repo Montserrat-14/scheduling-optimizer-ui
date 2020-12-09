@@ -15,7 +15,7 @@ export class DescriptionComponent implements OnInit {
   ) {
     this.descriptionForm = this._formBuilder.group({
       name: ['', Validators.required],
-      description: ['', Validators.required]
+      description: ['', [Validators.required, Validators.maxLength(200)]]
     }, { updateOn: 'blur' });
   }
 

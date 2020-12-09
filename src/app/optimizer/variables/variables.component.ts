@@ -76,7 +76,7 @@ export class VariablesComponent implements OnInit, AfterViewInit, OnDestroy {
 
   createVariableItem(): FormGroup {
     return this._formBuilder.group({
-      name: [null, Validators.required],
+      name: [null, [Validators.required, Validators.maxLength(23)]],
       type: [null, Validators.required],
       min: [null, Validators.required],
       max: [null, Validators.required],

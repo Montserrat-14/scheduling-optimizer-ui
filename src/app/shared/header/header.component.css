@@ -8,11 +8,30 @@ mat-nav-list#list-horizontal {
   text-decoration: underline;
 }
 
+#list_horizontal {
+  flex: 1;
+}
+
 .logo-container {
+  flex: 1;
   padding-left: 10px;
   padding-right: 10px;
 }
 
 .logo-container span {
   color: #10D48E;
+}
+
+.icon-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  min-width: 117px;
+  padding-left: 10px;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.header-icon {
+  height: 40px;
 }
