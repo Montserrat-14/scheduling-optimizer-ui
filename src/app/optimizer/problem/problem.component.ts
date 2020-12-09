@@ -1,5 +1,7 @@
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
+
 import { DescriptionComponent } from '../description/description.component';
 import { DurationComponent } from '../duration/duration.component';
 import { EvaluationComponent } from '../evaluation/evaluation.component';
@@ -9,8 +11,7 @@ import { VariablesComponent } from '../variables/variables.component';
 @Component({
   selector: 'app-problem',
   templateUrl: './problem.component.html',
-  styleUrls: ['./problem.component.css'],
-  providers: [ProblemService],
+  styleUrls: ['./problem.component.css']
 })
 export class ProblemComponent implements OnInit {
   isLinear = true;
@@ -44,14 +45,29 @@ export class ProblemComponent implements OnInit {
       : null;
   }
 
-  constructor(public problemService: ProblemService) {}
+  constructor(public problemService: ProblemService, private fb: FormBuilder) {}
 
   ngOnInit(): void {}
 
-  validateForms(): boolean {
-    return this.formDescription.valid &&
-          this.formVariables.valid &&
-          this.formEvaluation.valid &&
-          this.formDuration.valid
+  buildFullForm(): FormGroup {
+    return this.fb.group({
+      description: this.formDescription,
+      variables: this.formVariables,
+      evaulation: this.formEvaluation,
+      duration: this.formDuration
+    });
   }
+
+  getProblem(): void {
+    this.problemService.getSolution(this.buildFullForm()).subscribe(
+      res => {
+
+      },
+      err => {
+
+      }
+    );
+  }
+
+
 }

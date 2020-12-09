@@ -19,6 +19,7 @@ import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 import { MatSelectModule } from '@angular/material/select';
 import {MatSliderModule} from '@angular/material/slider';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import {MatSliderModule} from '@angular/material/slider';
   imports: [
     CommonModule,
     OptimizerRoutingModule,
+    HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
     MatFormFieldModule,
