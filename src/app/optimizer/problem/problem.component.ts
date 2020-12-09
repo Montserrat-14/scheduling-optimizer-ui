@@ -47,4 +47,11 @@ export class ProblemComponent implements OnInit {
   constructor(public problemService: ProblemService) {}
 
   ngOnInit(): void {}
+
+  validateForms(): boolean {
+    return this.formDescription.valid &&
+          this.formVariables.valid &&
+          this.formEvaluation.valid &&
+          this.formDuration.valid
+  }
 }
