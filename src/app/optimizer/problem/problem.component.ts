@@ -53,7 +53,7 @@ export class ProblemComponent implements OnInit {
     return this.fb.group({
       description: this.formDescription,
       variables: this.formVariables,
-      evaulation: this.formEvaluation,
+      evaluation: this.formEvaluation,
       duration: this.formDuration
     });
   }
