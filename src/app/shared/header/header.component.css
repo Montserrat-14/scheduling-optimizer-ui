@@ -35,3 +35,10 @@ mat-nav-list#list-horizontal {
 .header-icon {
   height: 40px;
 }
+
+.logo-header {
+  position: absolute;
+  margin-top: 6px;
+  max-height: 80%;
+  top: 0;
+}

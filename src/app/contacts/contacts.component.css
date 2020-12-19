@@ -1,0 +1,16 @@
+.icon-contacts {
+  height: 30px;
+}
+
+.list-team {
+  margin-top: 50px;
+}
+
+.icon-line {
+  display: flex;
+  align-items: center;
+}
+
+.icon-line a {
+  margin-left: 10px;
+}
