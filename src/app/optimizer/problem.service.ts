@@ -57,6 +57,18 @@ export class ProblemService {
   }
 
   buildBodyPayload(fullForm: FormGroup) {
-    return {}
+    const formValue = fullForm.value;
+
+    const payload = {
+      name: formValue.description.name ? formValue.description.name : null,
+      description: formValue.description.description ? formValue.description.description : null,
+      nObjectives: formValue.variables.objectives ? formValue.variables.objectives : null,
+      listOfVariables: formValue.variables.variables ? formValue.variables.variables : null,
+      endpoint: formValue.evaluation.endpoint ? formValue.variables.endpoint : null,
+      payload: formValue.evaluation.payload ? formValue.variables.payload : null,
+      duration: formValue.duration.duration ? formValue.duration.duration : null,
+    };
+
+    return payload;
   }
 }
