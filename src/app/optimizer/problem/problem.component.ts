@@ -1,5 +1,5 @@
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
 import { DescriptionComponent } from '../description/description.component';
@@ -13,7 +13,7 @@ import { VariablesComponent } from '../variables/variables.component';
   templateUrl: './problem.component.html',
   styleUrls: ['./problem.component.css']
 })
-export class ProblemComponent implements OnInit {
+export class ProblemComponent implements OnInit, AfterViewInit {
   isLinear = true;
 
   @ViewChild(DescriptionComponent) descriptionComponent: DescriptionComponent;
@@ -45,9 +45,13 @@ export class ProblemComponent implements OnInit {
       : null;
   }
 
-  constructor(public problemService: ProblemService, private fb: FormBuilder) {}
+  constructor(public problemService: ProblemService, private fb: FormBuilder, private cd: ChangeDetectorRef) {}
 
   ngOnInit(): void {}
+
+  ngAfterViewInit(): void {
+    this.cd.detectChanges();
+  }
 
   buildFullForm(): FormGroup {
     return this.fb.group({

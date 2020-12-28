@@ -59,6 +59,10 @@ export class ProblemService {
   buildBodyPayload(fullForm: FormGroup) {
     const formValue = fullForm.value;
 
+    formValue.variables.variables.forEach(element => {
+      Object.assign(element, {type: formValue.variables.type});
+    });
+
     const payload = {
       name: formValue.description.name ? formValue.description.name : null,
       description: formValue.description.description ? formValue.description.description : null,
