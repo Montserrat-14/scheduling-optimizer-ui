@@ -1,7 +1,13 @@
 import { Observable, pipe, Subscription } from 'rxjs';
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatTable, MatTableDataSource } from '@angular/material/table';
+import { MatColumnDef, MatTable, MatTableDataSource } from '@angular/material/table';
 import { distinctUntilChanged, filter, mapTo } from 'rxjs/operators';
 
 interface DataType {
@@ -12,7 +18,7 @@ interface DataType {
 @Component({
   selector: 'app-variables',
   templateUrl: './variables.component.html',
-  styleUrls: ['./variables.component.css']
+  styleUrls: ['./variables.component.css'],
 })
 export class VariablesComponent implements OnInit, AfterViewInit, OnDestroy {
   public variablesForm: FormGroup;
@@ -27,61 +33,101 @@ export class VariablesComponent implements OnInit, AfterViewInit, OnDestroy {
     this._variablesArrayForm = value;
   }
 
-  displayedColumns: string[] = ['name', 'type', 'min', 'max', 'delete'];
+  displayedColumns: string[] = ['name', 'min', 'max', 'description', 'delete'];
+  displayedColumnsBool: string[] = ['name', 'boolval', 'description', 'delete'];
 
-  @ViewChild(MatTable) _matTable:MatTable<any>;
+  @ViewChild(MatTable) _matTable: MatTable<any>;
+  @ViewChild(MatColumnDef) minDef: MatColumnDef;
 
   subscription: Subscription;
+  typeSubscription: Subscription;
 
   dataTypes: Array<DataType>;
+  boolValues: Array<DataType>;
 
-  constructor(
-    private _formBuilder: FormBuilder
-  ) {
+  constructor(private _formBuilder: FormBuilder) {
     this.dataTypes = [
-      {value: 'int', viewValue: 'Integer'},
-      {value: 'double', viewValue: 'Double'}
+      { value: 'int', viewValue: 'Integer' },
+      { value: 'double', viewValue: 'Double' },
+      { value: 'bool', viewValue: 'Boolean' },
+    ];
+
+    this.boolValues = [
+      { value: 'true', viewValue: 'True' },
+      { value: 'false', viewValue: 'False' },
     ];
 
     this.variablesForm = this._formBuilder.group({
       objectives: ['', Validators.required],
-      variables: this._formBuilder.array([])
-    });
+      type: [null, Validators.required],
+      variables: this._formBuilder.array([]),
+    },
+    { updateOn: 'blur' });
 
     this.variablesArrayForm$ = this.variablesArrayForm.valueChanges;
 
     this.myDataSource = new MatTableDataSource();
 
-    if(this.subscription == null) {
+    if (this.subscription == null) {
       this.subscription = this.variablesArrayForm$
-      .pipe(
-        distinctUntilChanged()
-      )
-      .subscribe(data => {
-        return this.myDataSource.data = data
-      })
+        .pipe(distinctUntilChanged())
+        .subscribe((data) => {
+          return (this.myDataSource.data = data);
+        });
+    }
+
+    if (this.typeSubscription == null) {
+      this.typeSubscription = this.variablesForm.get('type')
+        .valueChanges
+        .pipe(distinctUntilChanged())
+        .subscribe((type) => {
+          if (type == 'bool') {
+            (this.variablesForm.get('variables') as FormArray).controls.forEach(elem => {
+              elem.get('min').patchValue(null);
+              elem.get('max').patchValue(null);
+              elem.get('min').disable();
+              elem.get('max').disable();
+              elem.get('boolvalue').enable();
+            })
+          } else {
+            (this.variablesForm.get('variables') as FormArray).controls.forEach(elem => {
+              elem.get('boolvalue').patchValue(null);
+              elem.get('min').enable();
+              elem.get('max').enable();
+              elem.get('boolvalue').disable();
+            })
+          }
+        });
     }
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   ngAfterViewInit() {
     if (this.variablesArrayForm.controls.length === 0) {
-      this.variablesArrayForm = this.variablesForm.get('variables') as FormArray;
+      this.variablesArrayForm = this.variablesForm.get(
+        'variables'
+      ) as FormArray;
       this.variablesArrayForm.push(this.createVariableItem());
       this._matTable.renderRows();
     }
   }
 
   createVariableItem(): FormGroup {
-    return this._formBuilder.group({
-      name: [null, [Validators.required, Validators.maxLength(23)]],
-      type: [null, Validators.required],
-      min: [null, Validators.required],
-      max: [null, Validators.required],
-      description: [null]
-    }, { updateOn: 'blur' });
+    return this._formBuilder.group(
+      {
+        name: [null, [Validators.required, Validators.maxLength(23)]],
+        min: [{value: null, disabled: this.isDisabled()}, Validators.required],
+        max: [{value: null, disabled: this.isDisabled()}, Validators.required],
+        boolvalue: [{value: null, disabled: !this.isDisabled()}, Validators.required],
+        description: [null],
+      },
+      { updateOn: 'blur' }
+    );
+  }
+
+  isDisabled(): Boolean {
+    return this.variablesForm.get('type').value == 'bool';
   }
 
   addRow(): void {
@@ -89,12 +135,11 @@ export class VariablesComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.variablesArrayForm.valid) {
       this.variablesArrayForm = this.variablesForm.get('array') as FormArray;
       this.variablesArrayForm.push(this.createVariableItem());
-
     }
   }
 
   checkAllFormControls(group: FormGroup | FormArray) {
-    Object.keys(group.controls).forEach(key => {
+    Object.keys(group.controls).forEach((key) => {
       const currControl = group.get(key);
       if (currControl instanceof FormGroup) {
         this.checkAllFormControls(currControl);
@@ -106,13 +151,13 @@ export class VariablesComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   deleteRow(index: number): void {
-    if(this.variablesArrayForm.controls.length > 1) {
+    if (this.variablesArrayForm.controls.length > 1) {
       this.variablesArrayForm.removeAt(index);
     }
   }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+    this.typeSubscription.unsubscribe();
   }
-
 }

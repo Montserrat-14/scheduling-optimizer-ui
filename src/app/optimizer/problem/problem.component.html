@@ -11,12 +11,18 @@
   <mat-step [stepControl]="duration.durationForm" label="Duration">
     <app-duration #duration></app-duration>
   </mat-step>
-  <mat-step>
+  <mat-step >
     <ng-template matStepLabel>Confirmation</ng-template>
-    <p>You are now done.</p>
+    <div class="content-confirmation">
+      <h1>The form is now completed.</h1>
+      <h2>Do you confirm the submission of the form?</h2>
+      <div>
+        <button mat-raised-button (click)="stepper.reset()">Reset</button>
+        <button mat-raised-button (click)="getProblem()">Confirm</button>
+      </div>
+    </div>
 
-    <button mat-raised-button matStepperPrevious>Back</button>
-    <button mat-raised-button (click)="stepper.reset()">Reset</button>
-    <button mat-raised-button (click)="getProblem()">Confirm</button>
+
+
   </mat-step>
 </mat-horizontal-stepper>

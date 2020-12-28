@@ -59,13 +59,17 @@ export class ProblemService {
   buildBodyPayload(fullForm: FormGroup) {
     const formValue = fullForm.value;
 
+    formValue.variables.variables.forEach(element => {
+      Object.assign(element, {type: formValue.variables.type});
+    });
+
     const payload = {
-      name: formValue.description.name ? formValue.description.name : null,
-      description: formValue.description.description ? formValue.description.description : null,
+      name: formValue.description.name ? formValue.description.name : '',
+      description: formValue.description.description ? formValue.description.description : '',
       nObjectives: formValue.variables.objectives ? formValue.variables.objectives : null,
-      listOfVariables: formValue.variables.variables ? formValue.variables.variables : null,
-      endpoint: formValue.evaluation.endpoint ? formValue.variables.endpoint : null,
-      payload: formValue.evaluation.payload ? formValue.variables.payload : null,
+      listOfVariables: formValue.variables.variables ? formValue.variables.variables : [],
+      endpoint: formValue.evaluation.endpoint ? formValue.evaluation.endpoint : '',
+      payload: formValue.evaluation.payload ? formValue.evaluation.payload : '',
       duration: formValue.duration.duration ? formValue.duration.duration : null,
     };
 
