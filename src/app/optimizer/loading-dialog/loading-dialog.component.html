@@ -1,0 +1,27 @@
+<h1 mat-dialog-title>
+  <ng-container *ngIf="data.title; else templateTitle">{{data.title}}</ng-container>
+  <ng-template #templateTitle>Waiting for Results</ng-template>
+</h1>
+<div mat-dialog-content>
+  <div class="content-dialog">
+    <ng-container *ngIf="data.fstMsg; else templateFstMsg">{{data.fstMsg}}</ng-container>
+    <ng-template #templateFstMsg>
+      <h2>Please wait for your results.</h2>
+    </ng-template>
+
+    <ng-container *ngIf="data.sndMsg; else templateSndMsg">{{data.sndMsg}}</ng-container>
+    <ng-template #templateSndMsg>
+      <h3>You will be automatically redirected.</h3>
+    </ng-template>
+
+    <ng-container *ngIf="data.code != null && data.code == 0">
+      <mat-spinner></mat-spinner>
+    </ng-container>
+  </div>
+</div>
+
+<ng-container *ngIf="data.code != null && data.code == 500">
+  <div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">Close</button>
+  </div>
+</ng-container>

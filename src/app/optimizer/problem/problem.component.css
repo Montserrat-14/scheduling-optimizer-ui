@@ -1,3 +1,9 @@
 /* .mat-stepper-horizontal {
   background-color: inherit;
 } */
+
+.content-confirmation {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

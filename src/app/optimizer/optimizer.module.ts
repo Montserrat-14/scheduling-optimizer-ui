@@ -18,8 +18,12 @@ import { CommonModule } from '@angular/common';
 
 import { MatTableModule } from '@angular/material/table';
 import { MatSelectModule } from '@angular/material/select';
-import {MatSliderModule} from '@angular/material/slider';
+import { MatSliderModule } from '@angular/material/slider';
 import { HttpClientModule } from '@angular/common/http';
+import { MatDialogModule } from '@angular/material/dialog';
+import { LoadingDialogComponent } from './loading-dialog/loading-dialog.component';
+
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -31,6 +35,7 @@ import { HttpClientModule } from '@angular/common/http';
     MainComponent,
     ProblemComponent,
     DescriptionComponent,
+    LoadingDialogComponent,
   ],
   imports: [
     CommonModule,
@@ -44,7 +49,9 @@ import { HttpClientModule } from '@angular/common/http';
     MatButtonModule,
     MatTableModule,
     MatSelectModule,
-    MatSliderModule
+    MatSliderModule,
+    MatDialogModule,
+    MatProgressSpinnerModule
   ],
 })
 export class OptimizerModule {}

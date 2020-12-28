@@ -1,17 +1,26 @@
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
-import { ChangeDetectorRef, Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+  ViewChild,
+  AfterViewInit,
+} from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { DescriptionComponent } from '../description/description.component';
 import { DurationComponent } from '../duration/duration.component';
 import { EvaluationComponent } from '../evaluation/evaluation.component';
+import { LoadingDialogComponent } from '../loading-dialog/loading-dialog.component';
 import { ProblemService } from '../problem.service';
 import { VariablesComponent } from '../variables/variables.component';
 
 @Component({
   selector: 'app-problem',
   templateUrl: './problem.component.html',
-  styleUrls: ['./problem.component.css']
+  styleUrls: ['./problem.component.css'],
 })
 export class ProblemComponent implements OnInit, AfterViewInit {
   isLinear = true;
@@ -40,12 +49,17 @@ export class ProblemComponent implements OnInit, AfterViewInit {
   }
 
   get formDuration() {
-    return this.durationComponent
-      ? this.durationComponent.durationForm
-      : null;
+    return this.durationComponent ? this.durationComponent.durationForm : null;
   }
 
-  constructor(public problemService: ProblemService, private fb: FormBuilder, private cd: ChangeDetectorRef) {}
+  constructor(
+    public problemService: ProblemService,
+    private fb: FormBuilder,
+    private cd: ChangeDetectorRef,
+    public dialog: MatDialog,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {}
 
@@ -58,20 +72,36 @@ export class ProblemComponent implements OnInit, AfterViewInit {
       description: this.formDescription,
       variables: this.formVariables,
       evaluation: this.formEvaluation,
-      duration: this.formDuration
+      duration: this.formDuration,
     });
   }
 
   getProblem(): void {
-    this.problemService.getSolution(this.buildFullForm()).subscribe(
-      res => {
-
+    const dialogRef = this.dialog.open(LoadingDialogComponent, {
+      data: {
+        code: 0
       },
-      err => {
+    });
+
+    this.problemService.getSolution(this.buildFullForm()).subscribe(
+      (res) => {
+        dialogRef.close();
+
+        this.router.navigateByUrl('/optimizer/solution', { state: res });
+      },
+      (err) => {
+        dialogRef.close();
+
+        const errorDialog = this.dialog.open(LoadingDialogComponent, {
+          data: {
+            code: 500,
+            title: 'Error',
+            fstMsg: 'An error ocorred.',
+            sndMsg: 'Please try again.',
+          },
+        });
 
       }
     );
   }
-
-
 }
