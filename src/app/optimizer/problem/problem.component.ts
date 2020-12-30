@@ -87,7 +87,9 @@ export class ProblemComponent implements OnInit, AfterViewInit {
       (res) => {
         dialogRef.close();
 
-        this.router.navigateByUrl('/optimizer/solution', { state: res });
+        this.problemService.setProblem(res);
+
+        this.router.navigateByUrl('/optimizer/solution');
       },
       (err) => {
         dialogRef.close();
