@@ -1,34 +1,68 @@
-import { ActivatedRoute, Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { isEmpty, map } from 'rxjs/operators';
+import { ProblemService } from './../problem.service';
+import { Router } from '@angular/router';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { Problem } from 'src/app/models/problem.model';
+import { Result } from 'src/app/models/result.model';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-solution',
   templateUrl: './solution.component.html',
-  styleUrls: ['./solution.component.css']
+  styleUrls: ['./solution.component.css'],
 })
-export class SolutionComponent implements OnInit {
+export class SolutionComponent implements OnInit, AfterViewInit {
+  problem: Problem;
+  solutionColumns: Array<string>;
+  solutionVarColumns: Array<string>;
+  objectiveColumns: Array<string>;
+  objectiveVarColumns: Array<string>;
+  dataSource: MatTableDataSource<Result>;
 
-  state$: Observable<object>;
-  data: Object;
-  stringData: String;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(private activatedRoute: ActivatedRoute, private router: Router) {
-    this.state$ = this.activatedRoute.paramMap
-    .pipe(map(() => window.history.state));
-
+  constructor(private problemService: ProblemService, private router: Router) {
+    this.problem = this.problemService.getProblem();
+    if (this.problem == null) {
+      this.router.navigateByUrl('optimizer/problem');
+    }
   }
 
   ngOnInit(): void {
-    this.state$.subscribe(state => {
-      if (state['solutions'] == null) {
-        this.router.navigateByUrl('optimizer/problem');
-      } else {
-        this.data = state;
-        this.stringData = JSON.stringify(this.data);
-      }
-    });
+    this.solutionColumns = this.getSolutionColumns(this.problem.results);
+    this.solutionVarColumns = this.solutionColumns.slice(1);
+    this.objectiveColumns = this.getObjectiveColumns(this.problem.results);
+    this.objectiveVarColumns = this.objectiveColumns.slice(1)
+    this.dataSource = new MatTableDataSource<Result>(this.problem.results);
   }
 
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+  }
+
+  private getSolutionColumns(results: Array<Result>) {
+    const result = ["Nr."];
+
+    if (results.length > 0) {
+      results[0].solution.variables.forEach((variable) => {
+        result.push(variable.name);
+      });
+
+    }
+
+    return result;
+  }
+
+  private getObjectiveColumns(results: Array<Result>) {
+    const result = ["Nr."];
+
+    if (results.length > 0) {
+      results[0].solution.variables.forEach((variable) => {
+        result.push('Quality ' + variable.name);
+      });
+
+    }
+
+    return result;
+  }
 }

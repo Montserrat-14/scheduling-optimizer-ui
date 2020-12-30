@@ -2,8 +2,9 @@ import { environment } from './../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { Problem } from '../models/problem.model';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -15,45 +16,23 @@ const httpOptions = {
 
 @Injectable()
 export class ProblemService {
-  private solutionsArray = new Subject<Array<Array<number>>>();
-  solutionsArray$ = this.solutionsArray.asObservable();
-
-  private objectivesArray = new Subject<Array<Array<number>>>();
-  objectivesArray$ = this.objectivesArray.asObservable();
-
-  private solutionsFile = new Subject<Array<Array<number>>>();
-  solutionsFile$ = this.solutionsFile.asObservable();
-
-  private objectivesFile = new Subject<Array<Array<number>>>();
-  objectivesFile$ = this.objectivesFile.asObservable();
+  private problem = new BehaviorSubject<Problem>(null);
+  problem$ = this.problem.asObservable();
 
   constructor(private http: HttpClient) {}
 
   getSolution(
     fullForm: FormGroup
-  ): Observable<{
-    solutions: Array<Array<number>>;
-    objectives: Array<Array<number>>;
-    solutionsFile: string;
-    objectivesFile: string;
-  }> {
+  ): Observable<Problem> {
     const bodyPayload = this.buildBodyPayload(fullForm);
 
     return this.http.post(environment.baseUrl + 'problem', bodyPayload, httpOptions)
       .pipe(
         map(resp => {
-          console.log(resp);
-
-          const finalobject = {
-            solutions: [],
-            objectives: [],
-            solutionsFile: '',
-            objectivesFile: ''
-          };
-
-          return finalobject;
-        })
-      )
+          const problem = new Problem().deserialize(resp)
+          console.log(problem);
+          return problem;
+        }))
   }
 
   buildBodyPayload(fullForm: FormGroup) {
@@ -74,5 +53,13 @@ export class ProblemService {
     };
 
     return payload;
+  }
+
+  setProblem(problem: Problem): void {
+    this.problem.next(problem);
+  }
+
+  getProblem(): Problem {
+    return this.problem.getValue();
   }
 }
