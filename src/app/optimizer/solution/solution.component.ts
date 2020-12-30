@@ -1,23 +1,25 @@
 import { ProblemService } from './../problem.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { isEmpty, map } from 'rxjs/operators';
+import { Router } from '@angular/router';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { Problem } from 'src/app/models/problem.model';
 import { Result } from 'src/app/models/result.model';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-solution',
   templateUrl: './solution.component.html',
   styleUrls: ['./solution.component.css'],
 })
-export class SolutionComponent implements OnInit {
+export class SolutionComponent implements OnInit, AfterViewInit {
   problem: Problem;
-  displayedColumns: Array<string>;
   solutionColumns: Array<string>;
+  solutionVarColumns: Array<string>;
   objectiveColumns: Array<string>;
+  objectiveVarColumns: Array<string>;
   dataSource: MatTableDataSource<Result>;
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(private problemService: ProblemService, private router: Router) {
     const prob = {
@@ -54,19 +56,19 @@ export class SolutionComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.displayedColumns = this.getDisplayedColumns(this.problem.results);
-    this.objectiveColumns = this.getObjectiveColumns(this.problem.results);
     this.solutionColumns = this.getSolutionColumns(this.problem.results);
+    this.solutionVarColumns = this.solutionColumns.slice(1);
+    this.objectiveColumns = this.getObjectiveColumns(this.problem.results);
+    this.objectiveVarColumns = this.objectiveColumns.slice(1)
     this.dataSource = new MatTableDataSource<Result>(this.problem.results);
-    console.log(this.problem.results[0].solution.variables[0].value);
   }
 
-  private getDisplayedColumns(results: Array<Result>) {
-    return this.getSolutionColumns(results).concat(this.getObjectiveColumns(results));
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
   }
 
   private getSolutionColumns(results: Array<Result>) {
-    const result = [];
+    const result = ["Nr."];
 
     if (results.length > 0) {
       results[0].solution.variables.forEach((variable) => {
@@ -79,7 +81,7 @@ export class SolutionComponent implements OnInit {
   }
 
   private getObjectiveColumns(results: Array<Result>) {
-    const result = [];
+    const result = ["Nr."];
 
     if (results.length > 0) {
       results[0].solution.variables.forEach((variable) => {

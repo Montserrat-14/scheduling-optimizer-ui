@@ -25,6 +25,8 @@ import { LoadingDialogComponent } from './loading-dialog/loading-dialog.componen
 
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
+import { MatPaginatorModule } from '@angular/material/paginator';
+
 @NgModule({
   declarations: [
     VariablesComponent,
@@ -51,7 +53,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatSelectModule,
     MatSliderModule,
     MatDialogModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatPaginatorModule
   ],
 })
 export class OptimizerModule {}
