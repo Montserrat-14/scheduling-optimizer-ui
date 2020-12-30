@@ -22,33 +22,6 @@ export class SolutionComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(private problemService: ProblemService, private router: Router) {
-    const prob = {
-      results: [
-        {
-          solution: [
-            { name: 'var0', value: -45.05608608840617 },
-            { name: 'var1', value: 90.25354777559588 },
-          ],
-          objective: [
-            { value: -46.77249779762798 },
-            { value: 87.05146377658858 },
-          ],
-        },
-        {
-          solution: [
-            { name: 'var0', value: 72.71061965625623 },
-            { name: 'var1', value: 72.7980083030684 },
-          ],
-          objective: [
-            { value: 7.34371515788493 },
-            { value: -28.956817110297493 },
-          ],
-        },
-      ],
-    };
-
-    this.problemService.setProblem(new Problem().deserialize(prob));
-
     this.problem = this.problemService.getProblem();
     if (this.problem == null) {
       this.router.navigateByUrl('optimizer/problem');
