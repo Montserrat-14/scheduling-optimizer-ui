@@ -8,7 +8,8 @@ import {
 } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatColumnDef, MatTable, MatTableDataSource } from '@angular/material/table';
-import { distinctUntilChanged, filter, mapTo } from 'rxjs/operators';
+import { distinctUntilChanged, filter } from 'rxjs/operators';
+import { RangeValidator } from 'src/app/validator/range.validator';
 
 interface DataType {
   value: string;
@@ -43,7 +44,7 @@ export class VariablesComponent implements OnInit, AfterViewInit, OnDestroy {
 
   dataTypes: Array<DataType>;
 
-  constructor(private _formBuilder: FormBuilder) {
+  constructor(private _formBuilder: FormBuilder, private rangeValidator: RangeValidator) {
     this.dataTypes = [
       { value: 'int', viewValue: 'Integer' },
       { value: 'double', viewValue: 'Double' },
@@ -63,7 +64,10 @@ export class VariablesComponent implements OnInit, AfterViewInit, OnDestroy {
 
     if (this.subscription == null) {
       this.subscription = this.variablesArrayForm$
-        .pipe(distinctUntilChanged())
+        .pipe(
+          distinctUntilChanged(),
+          filter(elem => elem.length != this.myDataSource.data.length)
+        )
         .subscribe((data) => {
           return (this.myDataSource.data = data);
         });
@@ -111,8 +115,15 @@ export class VariablesComponent implements OnInit, AfterViewInit, OnDestroy {
         max: [{value: null, disabled: this.isDisabled()}, Validators.required],
         description: [null],
       },
-      { updateOn: 'blur' }
+      {
+        validators: [this.rangeValidator.minLessThanMax()],
+        updateOn: 'blur'
+      }
     );
+  }
+
+  printForm() {
+    console.log(this.variablesForm);
   }
 
   isDisabled(): Boolean {
