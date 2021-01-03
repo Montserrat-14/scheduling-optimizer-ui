@@ -15,139 +15,58 @@
     </mat-select>
   </mat-form-field>
 
-  <ng-container *ngIf="variablesForm.get('type').value != 'bool'; else boolTable">
-    <table mat-table #_matTable [dataSource]="myDataSource" formArrayName="variables">
-      <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef> Name </th>
-        <td mat-cell *matCellDef="let row; let index = index" [formGroupName]="index">
-          <mat-form-field appearance="outline">
-            <input matInput placeholder="Name" formControlName="name" required>
-          </mat-form-field>
-        </td>
-      </ng-container>
+  <table mat-table #_matTable [dataSource]="myDataSource" formArrayName="variables">
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Name </th>
+      <td mat-cell *matCellDef="let row; let index = index" [formGroupName]="index">
+        <mat-form-field appearance="outline">
+          <input matInput placeholder="Name" formControlName="name" required>
+        </mat-form-field>
+      </td>
+    </ng-container>
 
-      <ng-container #minDef matColumnDef="min">
-        <th mat-header-cell *matHeaderCellDef> Minimum Value </th>
-        <td mat-cell *matCellDef="let row; let index = index" [formGroupName]="index">
-          <mat-form-field appearance="outline">
-            <input matInput type="number" placeholder="Minimum" formControlName="min" required>
-          </mat-form-field>
-        </td>
-      </ng-container>
+    <ng-container #minDef matColumnDef="min">
+      <th mat-header-cell *matHeaderCellDef> Minimum Value </th>
+      <td mat-cell *matCellDef="let row; let index = index" [formGroupName]="index">
+        <mat-form-field appearance="outline">
+          <input matInput type="number" placeholder="Minimum" formControlName="min"
+            [class.mat-form-field-invalid]="index.errors?.invertedRange" required>
+        </mat-form-field>
+      </td>
+    </ng-container>
 
-      <ng-container matColumnDef="max">
-        <th mat-header-cell *matHeaderCellDef> Maximum Value </th>
-        <td mat-cell *matCellDef="let row; let index = index" [formGroupName]="index">
-          <mat-form-field appearance="outline">
-            <input matInput type="number" placeholder="Maximum" formControlName="max" required>
-          </mat-form-field>
-        </td>
-      </ng-container>
+    <ng-container matColumnDef="max">
+      <th mat-header-cell *matHeaderCellDef> Maximum Value </th>
+      <td mat-cell *matCellDef="let row; let index = index" [formGroupName]="index">
+        <mat-form-field appearance="outline">
+          <input matInput type="number" placeholder="Maximum" formControlName="max"
+            [class.mat-form-field-invalid]="index.errors?.invertedRange" required>
+        </mat-form-field>
+      </td>
+    </ng-container>
 
-      <ng-container matColumnDef="boolval">
-        <th mat-header-cell *matHeaderCellDef> Value </th>
-        <td mat-cell *matCellDef="let row; let index = index" [formGroupName]="index">
-          <mat-form-field appearance="outline">
-            <mat-select formControlName="value" placeholder="Type" required>
-              <mat-option *ngFor="let dt of boolValues" [value]="dt.value">
-                {{dt.viewValue}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-        </td>
-      </ng-container>
+    <ng-container matColumnDef="description">
+      <th mat-header-cell *matHeaderCellDef> Description </th>
+      <td mat-cell *matCellDef="let row; let index = index" [formGroupName]="index">
+        <mat-form-field appearance="outline">
+          <input matInput placeholder="Description" formControlName="description">
+        </mat-form-field>
+      </td>
+    </ng-container>
 
-      <ng-container matColumnDef="description">
-        <th mat-header-cell *matHeaderCellDef> Description </th>
-        <td mat-cell *matCellDef="let row; let index = index" [formGroupName]="index">
-          <mat-form-field appearance="outline">
-            <input matInput placeholder="Description" formControlName="description">
-          </mat-form-field>
-        </td>
-      </ng-container>
+    <ng-container matColumnDef="delete">
+      <th mat-header-cell *matHeaderCellDef> </th>
+      <td mat-cell *matCellDef="let row; let index = index" [formGroupName]="index">
+        <button mat-raised-button color="primary" (click)="deleteRow(index)" title="Eliminar cheque"
+          aria-label="Eliminar cheque">
+          DELETE
+        </button>
+      </td>
+    </ng-container>
 
-      <ng-container matColumnDef="delete">
-        <th mat-header-cell *matHeaderCellDef> </th>
-        <td mat-cell *matCellDef="let row; let index = index" [formGroupName]="index">
-          <button mat-raised-button color="primary" (click)="deleteRow(index)" title="Eliminar cheque"
-            aria-label="Eliminar cheque">
-            DELETE
-          </button>
-        </td>
-      </ng-container>
-
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
-  </ng-container>
-
-  <ng-template #boolTable>
-    <table mat-table #_matTable [dataSource]="myDataSource" formArrayName="variables">
-      <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef> Name </th>
-        <td mat-cell *matCellDef="let row; let index = index" [formGroupName]="index">
-          <mat-form-field appearance="outline">
-            <input matInput placeholder="Name" formControlName="name" required>
-          </mat-form-field>
-        </td>
-      </ng-container>
-
-      <ng-container #minDef matColumnDef="min">
-        <th mat-header-cell *matHeaderCellDef> Minimum Value </th>
-        <td mat-cell *matCellDef="let row; let index = index" [formGroupName]="index">
-          <mat-form-field appearance="outline">
-            <input matInput type="number" placeholder="Minimum" formControlName="min" required>
-          </mat-form-field>
-        </td>
-      </ng-container>
-
-      <ng-container matColumnDef="max">
-        <th mat-header-cell *matHeaderCellDef> Maximum Value </th>
-        <td mat-cell *matCellDef="let row; let index = index" [formGroupName]="index">
-          <mat-form-field appearance="outline">
-            <input matInput type="number" placeholder="Maximum" formControlName="max" required>
-          </mat-form-field>
-        </td>
-      </ng-container>
-
-      <ng-container matColumnDef="boolval">
-        <th mat-header-cell *matHeaderCellDef> Value </th>
-        <td mat-cell *matCellDef="let row; let index = index" [formGroupName]="index">
-          <mat-form-field appearance="outline">
-            <mat-select formControlName="boolvalue" placeholder="Type" required>
-              <mat-option *ngFor="let dt of boolValues" [value]="dt.value">
-                {{dt.viewValue}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-        </td>
-      </ng-container>
-
-      <ng-container matColumnDef="description">
-        <th mat-header-cell *matHeaderCellDef> Description </th>
-        <td mat-cell *matCellDef="let row; let index = index" [formGroupName]="index">
-          <mat-form-field appearance="outline">
-            <input matInput placeholder="Description" formControlName="description">
-          </mat-form-field>
-        </td>
-      </ng-container>
-
-      <ng-container matColumnDef="delete">
-        <th mat-header-cell *matHeaderCellDef> </th>
-        <td mat-cell *matCellDef="let row; let index = index" [formGroupName]="index">
-          <button mat-raised-button color="primary" (click)="deleteRow(index)" title="Eliminar cheque"
-            aria-label="Eliminar cheque">
-            DELETE
-          </button>
-        </td>
-      </ng-container>
-
-      <tr mat-header-row *matHeaderRowDef="displayedColumnsBool"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumnsBool;"></tr>
-    </table>
-  </ng-template>
-
-
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
 
   <button mat-raised-button color="primary" (click)="addRow()" title="Eliminar cheque" aria-label="Eliminar cheque">
     ADD

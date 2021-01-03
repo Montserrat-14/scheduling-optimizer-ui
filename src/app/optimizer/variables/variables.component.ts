@@ -8,7 +8,8 @@ import {
 } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatColumnDef, MatTable, MatTableDataSource } from '@angular/material/table';
-import { distinctUntilChanged, filter, mapTo } from 'rxjs/operators';
+import { distinctUntilChanged, filter } from 'rxjs/operators';
+import { RangeValidator } from 'src/app/validator/range.validator';
 
 interface DataType {
   value: string;
@@ -34,7 +35,6 @@ export class VariablesComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   displayedColumns: string[] = ['name', 'min', 'max', 'description', 'delete'];
-  displayedColumnsBool: string[] = ['name', 'boolval', 'description', 'delete'];
 
   @ViewChild(MatTable) _matTable: MatTable<any>;
   @ViewChild(MatColumnDef) minDef: MatColumnDef;
@@ -43,18 +43,12 @@ export class VariablesComponent implements OnInit, AfterViewInit, OnDestroy {
   typeSubscription: Subscription;
 
   dataTypes: Array<DataType>;
-  boolValues: Array<DataType>;
 
-  constructor(private _formBuilder: FormBuilder) {
+  constructor(private _formBuilder: FormBuilder, private rangeValidator: RangeValidator) {
     this.dataTypes = [
       { value: 'int', viewValue: 'Integer' },
       { value: 'double', viewValue: 'Double' },
       { value: 'bool', viewValue: 'Boolean' },
-    ];
-
-    this.boolValues = [
-      { value: 'true', viewValue: 'True' },
-      { value: 'false', viewValue: 'False' },
     ];
 
     this.variablesForm = this._formBuilder.group({
@@ -70,7 +64,10 @@ export class VariablesComponent implements OnInit, AfterViewInit, OnDestroy {
 
     if (this.subscription == null) {
       this.subscription = this.variablesArrayForm$
-        .pipe(distinctUntilChanged())
+        .pipe(
+          distinctUntilChanged(),
+          filter(elem => elem.length != this.myDataSource.data.length)
+        )
         .subscribe((data) => {
           return (this.myDataSource.data = data);
         });
@@ -87,14 +84,11 @@ export class VariablesComponent implements OnInit, AfterViewInit, OnDestroy {
               elem.get('max').patchValue(null);
               elem.get('min').disable();
               elem.get('max').disable();
-              elem.get('boolvalue').enable();
             })
           } else {
             (this.variablesForm.get('variables') as FormArray).controls.forEach(elem => {
-              elem.get('boolvalue').patchValue(null);
               elem.get('min').enable();
               elem.get('max').enable();
-              elem.get('boolvalue').disable();
             })
           }
         });
@@ -119,10 +113,12 @@ export class VariablesComponent implements OnInit, AfterViewInit, OnDestroy {
         name: [null, [Validators.required, Validators.maxLength(23)]],
         min: [{value: null, disabled: this.isDisabled()}, Validators.required],
         max: [{value: null, disabled: this.isDisabled()}, Validators.required],
-        boolvalue: [{value: null, disabled: !this.isDisabled()}, Validators.required],
         description: [null],
       },
-      { updateOn: 'blur' }
+      {
+        validators: [this.rangeValidator.minLessThanMax()],
+        updateOn: 'blur'
+      }
     );
   }
 
