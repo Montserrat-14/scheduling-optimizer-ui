@@ -1,9 +1,9 @@
 import { Observable } from 'rxjs';
-import { environment } from './../../../environments/environment';
 import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import * as fileSaver from 'file-saver';
+import { environment } from 'src/environments/environment';
 
 const httpOptions = {
   headers: new HttpHeaders({
