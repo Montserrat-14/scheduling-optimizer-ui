@@ -14,7 +14,7 @@ import { DescriptionComponent } from '../description/description.component';
 import { DurationComponent } from '../duration/duration.component';
 import { EvaluationComponent } from '../evaluation/evaluation.component';
 import { LoadingDialogComponent } from '../loading-dialog/loading-dialog.component';
-import { ProblemService } from '../problem.service';
+import { ProblemService } from '../services/problem.service';
 import { VariablesComponent } from '../variables/variables.component';
 
 @Component({

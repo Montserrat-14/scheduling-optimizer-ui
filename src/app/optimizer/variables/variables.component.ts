@@ -122,10 +122,6 @@ export class VariablesComponent implements OnInit, AfterViewInit, OnDestroy {
     );
   }
 
-  printForm() {
-    console.log(this.variablesForm);
-  }
-
   isDisabled(): Boolean {
     return this.variablesForm.get('type').value == 'bool';
   }
