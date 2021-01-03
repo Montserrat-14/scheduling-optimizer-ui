@@ -3,7 +3,7 @@
   <mat-form-field appearance="outline">
     <mat-label>Solution Endpoint:</mat-label>
     <input matInput placeholder="Endpoint for the evaluation" formControlName="endpoint"
-      pattern="^(?:http(s)?:\/\/)?[\w.-]*(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$" required>
+      pattern="^(?:^|\s)((https?:\/\/)?(?:localhost|[\w-]+(?:\.[\w-]+)+)(:\d+)?(\/\S*)?)$" required>
   </mat-form-field>
   <mat-form-field appearance="outline" class="textareaForm">
     <mat-label>Solution Payload:</mat-label>
