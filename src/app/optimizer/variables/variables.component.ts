@@ -52,7 +52,7 @@ export class VariablesComponent implements OnInit, AfterViewInit, OnDestroy {
     ];
 
     this.variablesForm = this._formBuilder.group({
-      objectives: ['', Validators.required],
+      objectives: ['', [Validators.required, Validators.min(1)]],
       type: [null, Validators.required],
       variables: this._formBuilder.array([]),
     },
