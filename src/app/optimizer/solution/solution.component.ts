@@ -66,8 +66,8 @@ export class SolutionComponent implements OnInit, AfterViewInit {
     const result = ['Nr.'];
 
     if (results.length > 0) {
-      results[0].solution.variables.forEach((variable) => {
-        result.push('Quality ' + variable.name);
+      results[0].objective.variables.forEach((variable, index) => {
+        result.push('Quality ' + index);
       });
     }
 
