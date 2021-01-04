@@ -89,6 +89,7 @@ export class SolutionComponent implements OnInit, AfterViewInit {
             fstMsg: 'An error ocorred.',
             sndMsg: 'Please try again.',
           },
+          disableClose: true
         });
       }
     );

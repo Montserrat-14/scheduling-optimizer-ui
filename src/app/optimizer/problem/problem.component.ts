@@ -81,6 +81,7 @@ export class ProblemComponent implements OnInit, AfterViewInit {
       data: {
         code: 0
       },
+      disableClose: true
     });
 
     this.problemService.getSolution(this.buildFullForm()).subscribe(
@@ -101,6 +102,7 @@ export class ProblemComponent implements OnInit, AfterViewInit {
             fstMsg: 'An error ocorred.',
             sndMsg: 'Please try again.',
           },
+          disableClose: true
         });
 
       }
