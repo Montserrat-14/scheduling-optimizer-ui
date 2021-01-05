@@ -117,7 +117,7 @@ export class VariablesComponent implements OnInit, AfterViewInit, OnDestroy {
         name: [null, [Validators.required, Validators.maxLength(23)]],
         min: [{value: null, disabled: this.isDisabled()}, Validators.required],
         max: [{value: null, disabled: this.isDisabled()}, Validators.required],
-        bits: [{value: null, disabled: !this.isDisabled()}, Validators.required],
+        bits: [{value: null, disabled: !this.isDisabled()}, [Validators.required, Validators.min(1)]],
         description: [null],
       },
       {
