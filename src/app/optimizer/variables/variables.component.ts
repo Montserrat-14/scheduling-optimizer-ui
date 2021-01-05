@@ -35,6 +35,7 @@ export class VariablesComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   displayedColumns: string[] = ['name', 'min', 'max', 'description', 'delete'];
+  displayedColumnsBinary: string[] = ['name', 'bits', 'description', 'delete'];
 
   @ViewChild(MatTable) _matTable: MatTable<any>;
   @ViewChild(MatColumnDef) minDef: MatColumnDef;
@@ -48,7 +49,7 @@ export class VariablesComponent implements OnInit, AfterViewInit, OnDestroy {
     this.dataTypes = [
       { value: 'int', viewValue: 'Integer' },
       { value: 'double', viewValue: 'Double' },
-      { value: 'bool', viewValue: 'Boolean' },
+      { value: 'binary', viewValue: 'Binary' },
     ];
 
     this.variablesForm = this._formBuilder.group({
@@ -78,17 +79,20 @@ export class VariablesComponent implements OnInit, AfterViewInit, OnDestroy {
         .valueChanges
         .pipe(distinctUntilChanged())
         .subscribe((type) => {
-          if (type == 'bool') {
+          if (type == 'binary') {
             (this.variablesForm.get('variables') as FormArray).controls.forEach(elem => {
               elem.get('min').patchValue(null);
               elem.get('max').patchValue(null);
               elem.get('min').disable();
               elem.get('max').disable();
+              elem.get('bits').enable();
             })
           } else {
             (this.variablesForm.get('variables') as FormArray).controls.forEach(elem => {
+              elem.get('bits').patchValue(null);
               elem.get('min').enable();
               elem.get('max').enable();
+              elem.get('bits').disable();
             })
           }
         });
@@ -113,6 +117,7 @@ export class VariablesComponent implements OnInit, AfterViewInit, OnDestroy {
         name: [null, [Validators.required, Validators.maxLength(23)]],
         min: [{value: null, disabled: this.isDisabled()}, Validators.required],
         max: [{value: null, disabled: this.isDisabled()}, Validators.required],
+        bits: [{value: null, disabled: !this.isDisabled()}, [Validators.required, Validators.min(1)]],
         description: [null],
       },
       {
@@ -123,7 +128,7 @@ export class VariablesComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   isDisabled(): Boolean {
-    return this.variablesForm.get('type').value == 'bool';
+    return this.variablesForm.get('type').value == 'binary';
   }
 
   addRow(): void {
