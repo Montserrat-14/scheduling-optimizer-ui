@@ -184,7 +184,7 @@ docker-compose pull
 
 ### Run Both Containers
 ```batch
-docker-compose up
+docker-compose up -d
 ```
 
 
