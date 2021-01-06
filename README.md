@@ -167,14 +167,24 @@ or
 
 ## How to pull and run Docker image
 
-### Pull Docker Image
+### Pull UI Docker Image
 ```batch
 docker pull diogomfernandes/system-optimizer-ui
 ```
 
-### Run Container
+### Run UI Container
 ```batch
 docker run --name angular -dit -p 3000:80 diogomfernandes/system-optimizer-ui:latest
+```
+
+### Pull Both Images
+```batch
+docker-compose pull
+```
+
+### Run Both Containers
+```batch
+docker-compose up
 ```
 
 
