@@ -1,5 +1,5 @@
-# System Optimizer API
-### Frontend for system optimizer
+# Scheduling Optimizer API
+### Frontend for Scheduling Optimizer
 
 
 ## Structure of the Application

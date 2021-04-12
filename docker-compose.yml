@@ -3,7 +3,7 @@ version: '3'
 services:
   angular:
     container_name: angular
-    image: diogomfernandes/system-optimizer-ui
+    image: diogomfernandes/scheduling-optimizer-ui
     ports:
       - 3000:80
     networks:
