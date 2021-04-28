@@ -1,3 +1,4 @@
+import { TasksComponent } from './../tasks/tasks.component';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import {
   ChangeDetectorRef,
@@ -15,7 +16,6 @@ import { DurationComponent } from '../duration/duration.component';
 import { EvaluationComponent } from '../evaluation/evaluation.component';
 import { LoadingDialogComponent } from '../loading-dialog/loading-dialog.component';
 import { ProblemService } from '../services/problem.service';
-import { VariablesComponent } from '../variables/variables.component';
 
 @Component({
   selector: 'app-problem',
@@ -26,7 +26,7 @@ export class ProblemComponent implements OnInit, AfterViewInit {
   isLinear = true;
 
   @ViewChild(DescriptionComponent) descriptionComponent: DescriptionComponent;
-  @ViewChild(VariablesComponent) variablesComponent: VariablesComponent;
+  @ViewChild(TasksComponent) tasksComponent: TasksComponent;
   @ViewChild(EvaluationComponent) evaluationComponent: EvaluationComponent;
   @ViewChild(DurationComponent) durationComponent: DurationComponent;
 
@@ -36,9 +36,9 @@ export class ProblemComponent implements OnInit, AfterViewInit {
       : null;
   }
 
-  get formVariables() {
-    return this.variablesComponent
-      ? this.variablesComponent.variablesForm
+  get formTasks() {
+    return this.tasksComponent
+      ? this.tasksComponent.tasksForm
       : null;
   }
 
@@ -70,7 +70,7 @@ export class ProblemComponent implements OnInit, AfterViewInit {
   buildFullForm(): FormGroup {
     return this.fb.group({
       description: this.formDescription,
-      variables: this.formVariables,
+      tasks: this.tasksComponent,
       evaluation: this.formEvaluation,
       duration: this.formDuration,
     });

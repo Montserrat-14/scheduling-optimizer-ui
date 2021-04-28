@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 
 import { OptimizerRoutingModule } from './optimizer-routing.module';
-import { VariablesComponent } from './variables/variables.component';
 import { EvaluationComponent } from './evaluation/evaluation.component';
 import { DurationComponent } from './duration/duration.component';
 import { ConfirmationComponent } from './confirmation/confirmation.component';
@@ -26,10 +25,11 @@ import { LoadingDialogComponent } from './loading-dialog/loading-dialog.componen
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { TasksComponent } from './tasks/tasks.component';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
-    VariablesComponent,
     EvaluationComponent,
     DurationComponent,
     ConfirmationComponent,
@@ -38,6 +38,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     ProblemComponent,
     DescriptionComponent,
     LoadingDialogComponent,
+    TasksComponent,
   ],
   imports: [
     CommonModule,
@@ -54,7 +55,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatSliderModule,
     MatDialogModule,
     MatProgressSpinnerModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatIconModule
   ],
 })
 export class OptimizerModule {}

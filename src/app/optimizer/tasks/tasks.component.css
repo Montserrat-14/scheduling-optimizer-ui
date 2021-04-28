@@ -1,0 +1,50 @@
+mat-form-field* {
+  width: 100%;
+}
+
+.task-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.task-name-header {
+  flex: 2;
+  display: flex;
+  justify-content: center;
+}
+.task-duration-header {
+  flex: 2;
+  display: flex;
+  justify-content: center;
+}
+.task-description-header {
+  flex: 4;
+  display: flex;
+  justify-content: center;
+}
+.task-delete-header {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.task-name {
+  flex: 2;
+  display: flex;
+  justify-content: center;
+}
+.task-duration {
+  flex: 2;
+  display: flex;
+  justify-content: center;
+}
+.task-description {
+  flex: 4;
+  display: flex;
+  justify-content: center;
+}
+.task-delete {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
