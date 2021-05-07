@@ -39,11 +39,11 @@ export class ResourcesComponent implements OnInit {
   ngOnInit(): void {
     if (this.resourcesArrayForm.controls.length === 0) {
       this.resourcesArrayForm = this.resourcesForm.get('resources') as FormArray;
-      this.resourcesArrayForm.push(this.createTaskItem());
+      this.resourcesArrayForm.push(this.createResourceItem());
     }
   }
 
-  createTaskItem(): FormGroup {
+  createResourceItem(): FormGroup {
     return this._formBuilder.group(
       {
         name: [null, [Validators.required, Validators.maxLength(23)]],
@@ -61,7 +61,7 @@ export class ResourcesComponent implements OnInit {
     this.checkAllFormControls(this.resourcesArrayForm);
     if (this.resourcesArrayForm.valid) {
       this.resourcesArrayForm = this.resourcesForm.get('array') as FormArray;
-      this.resourcesArrayForm.push(this.createTaskItem());
+      this.resourcesArrayForm.push(this.createResourceItem());
     }
   }
 

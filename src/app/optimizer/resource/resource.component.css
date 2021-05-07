@@ -34,22 +34,22 @@ mat-form-field* {
 }
 
 .task-name {
-  flex: 2;
+  flex: 3;
   display: flex;
   justify-content: center;
 }
-.task-quantity {
-  flex: 2;
+.task-qu3ntity {
+  flex: 3;
   display: flex;
   justify-content: center;
 }
 .task-cost {
-  flex: 2;
+  flex: 3;
   display: flex;
   justify-content: center;
 }
 .task-description {
-  flex: 4;
+  flex: 5;
   display: flex;
   justify-content: center;
 }

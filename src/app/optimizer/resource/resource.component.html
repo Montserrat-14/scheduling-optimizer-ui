@@ -1,5 +1,5 @@
 <form [formGroup]="resourcesForm">
-  <h3 class="mat-title">Please indicate the resources associated with the problem and the estimated duration of each one:</h3>
+  <h3 class="mat-title">Please indicate the resources available:</h3>
 
 
   <mat-form-field appearance="outline">
@@ -39,7 +39,7 @@
       </div>
       <div class="task-description">
         <mat-form-field appearance="outline">
-          <input matInput placeholder="Description" formControlName="description" required>
+          <input matInput placeholder="Description" formControlName="description">
         </mat-form-field>
       </div>
       <div class="task-delete">

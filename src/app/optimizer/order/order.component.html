@@ -1,0 +1,49 @@
+<form [formGroup]="orderForm">
+  <h3 class="mat-title">Please specify your order:</h3>
+
+  <ng-template matStepLabel>Fill out your name</ng-template>
+  <mat-form-field appearance="outline">
+    <mat-label>Name</mat-label>
+    <input matInput placeholder="Name of the problem" formControlName="name" required>
+  </mat-form-field>
+  <mat-form-field appearance="outline" class="textareaForm">
+    <mat-label>Description</mat-label>
+    <textarea matInput placeholder="Description of the problem" formControlName="description" required></textarea>
+  </mat-form-field>
+
+  <h4 class="mat-title">Please indicate the jobs associated with the order:</h4>
+
+  <div class="order-row">
+    <div class="order-name-header">Name</div>
+    <div class="order-description-header">Description</div>
+    <div class="order-delete-header"></div>
+  </div>
+
+  <div formArrayName="jobs"
+    *ngFor="let order of orderForm.get('jobs')['controls']; let i = index">
+    <div class="order-row" [formGroupName]="i">
+      <div class="order-name">
+        <mat-form-field appearance="outline">
+          <input matInput placeholder="Type Name" formControlName="name" required>
+        </mat-form-field>
+      </div>
+      <div class="order-description">
+        <mat-form-field appearance="outline">
+          <input matInput placeholder="Description" formControlName="description" required>
+        </mat-form-field>
+      </div>
+      <div class="order-delete">
+        <button *ngIf="orderForm.get('jobs')['controls'].length > 1"
+          mat-fab color="primary" aria-label="Delete this row" (click)="deleteRow(i)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="buttonArea">
+    <button mat-fab color="primary" aria-label="Next Page" matStepperNext>
+      <mat-icon>navigate_next</mat-icon>
+    </button>
+  </div>
+</form>

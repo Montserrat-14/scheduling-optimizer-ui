@@ -10,7 +10,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { DescriptionComponent } from '../description/description.component';
+import { OrderComponent } from '../order/order.component';
 import { DurationComponent } from '../duration/duration.component';
 import { EvaluationComponent } from '../evaluation/evaluation.component';
 import { LoadingDialogComponent } from '../loading-dialog/loading-dialog.component';
@@ -24,14 +24,14 @@ import { ProblemService } from '../services/problem.service';
 export class ProblemComponent implements OnInit, AfterViewInit {
   isLinear = true;
 
-  @ViewChild(DescriptionComponent) descriptionComponent: DescriptionComponent;
+  @ViewChild(OrderComponent) descriptionComponent: OrderComponent;
   @ViewChild(ResourceComponent) resourcesComponent: ResourceComponent;
   @ViewChild(EvaluationComponent) evaluationComponent: EvaluationComponent;
   @ViewChild(DurationComponent) durationComponent: DurationComponent;
 
   get formDescription() {
     return this.descriptionComponent
-      ? this.descriptionComponent.descriptionForm
+      ? this.descriptionComponent.orderForm
       : null;
   }
 

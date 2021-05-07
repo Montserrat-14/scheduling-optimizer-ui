@@ -1,0 +1,36 @@
+.order-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.order-name-header {
+  flex: 2;
+  display: flex;
+  justify-content: center;
+}
+.order-description-header {
+  flex: 4;
+  display: flex;
+  justify-content: center;
+}
+.order-delete-header {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.order-name {
+  flex: 2;
+  display: flex;
+  justify-content: center;
+}
+.order-description {
+  flex: 4;
+  display: flex;
+  justify-content: center;
+}
+.order-delete {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
