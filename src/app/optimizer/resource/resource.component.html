@@ -1,0 +1,69 @@
+<form [formGroup]="resourcesForm">
+  <h3 class="mat-title">Please indicate the resources associated with the problem and the estimated duration of each one:</h3>
+
+
+  <mat-form-field appearance="outline">
+    <mat-select formControlName="type" placeholder="Type" required>
+      <mat-option *ngFor="let type of RESOURCE_TYPES" [value]="type.value">
+        {{type.viewValue}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+
+  <div class="task-row">
+    <div class="task-name-header">Name</div>
+    <div class="task-quantity-header">Quantity</div>
+    <div class="task-cost-header">Cost</div>
+    <div class="task-description-header">Description</div>
+    <div class="task-delete-header"></div>
+  </div>
+
+  <div formArrayName="resources"
+    *ngFor="let task of resourcesForm.get('resources')['controls']; let i = index">
+    <div class="task-row" [formGroupName]="i">
+      <div class="task-name">
+        <mat-form-field appearance="outline">
+          <input matInput placeholder="Type Name" formControlName="name" required>
+        </mat-form-field>
+      </div>
+      <div class="task-quantity">
+        <mat-form-field appearance="outline">
+          <input type="number" matInput placeholder="Quantity" formControlName="quantity" required>
+        </mat-form-field>
+      </div>
+      <div class="task-cost">
+        <mat-form-field appearance="outline">
+          <input type="number" matInput placeholder="Cost" formControlName="cost" required>
+        </mat-form-field>
+      </div>
+      <div class="task-description">
+        <mat-form-field appearance="outline">
+          <input matInput placeholder="Description" formControlName="description" required>
+        </mat-form-field>
+      </div>
+      <div class="task-delete">
+        <button *ngIf="resourcesForm.get('resources')['controls'].length > 1"
+          mat-fab color="primary" aria-label="Delete this row" (click)="deleteRow(i)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div style="display: flex; flex-direction: row; justify-content: space-between;">
+    <button mat-fab color="primary" aria-label="Add new row" (click)="addRow()">
+      <mat-icon>add</mat-icon>
+    </button>
+    <div>
+      <button mat-fab aria-label="Previous Page" matStepperPrevious>
+        <mat-icon>navigate_before</mat-icon>
+      </button>
+      <button mat-fab color="primary" aria-label="Next Page" matStepperNext>
+        <mat-icon>navigate_next</mat-icon>
+      </button>
+    </div>
+  </div>
+
+
+</form>

@@ -25,7 +25,7 @@ import { LoadingDialogComponent } from './loading-dialog/loading-dialog.componen
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { MatPaginatorModule } from '@angular/material/paginator';
-import { TasksComponent } from './tasks/tasks.component';
+import { ResourcesComponent } from './resource/resource.component';
 import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
@@ -38,7 +38,7 @@ import { MatIconModule } from '@angular/material/icon';
     ProblemComponent,
     DescriptionComponent,
     LoadingDialogComponent,
-    TasksComponent,
+    ResourcesComponent,
   ],
   imports: [
     CommonModule,

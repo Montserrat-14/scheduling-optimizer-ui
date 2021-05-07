@@ -1,5 +1,4 @@
-import { TasksComponent } from './../tasks/tasks.component';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { ResourcesComponent as ResourceComponent } from '../resource/resource.component';
 import {
   ChangeDetectorRef,
   Component,
@@ -26,7 +25,7 @@ export class ProblemComponent implements OnInit, AfterViewInit {
   isLinear = true;
 
   @ViewChild(DescriptionComponent) descriptionComponent: DescriptionComponent;
-  @ViewChild(TasksComponent) tasksComponent: TasksComponent;
+  @ViewChild(ResourceComponent) resourcesComponent: ResourceComponent;
   @ViewChild(EvaluationComponent) evaluationComponent: EvaluationComponent;
   @ViewChild(DurationComponent) durationComponent: DurationComponent;
 
@@ -37,8 +36,8 @@ export class ProblemComponent implements OnInit, AfterViewInit {
   }
 
   get formTasks() {
-    return this.tasksComponent
-      ? this.tasksComponent.tasksForm
+    return this.resourcesComponent
+      ? this.resourcesComponent.resourcesForm
       : null;
   }
 
@@ -70,7 +69,7 @@ export class ProblemComponent implements OnInit, AfterViewInit {
   buildFullForm(): FormGroup {
     return this.fb.group({
       description: this.formDescription,
-      tasks: this.tasksComponent,
+      tasks: this.resourcesComponent,
       evaluation: this.formEvaluation,
       duration: this.formDuration,
     });
