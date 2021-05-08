@@ -29,6 +29,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { OperationsComponent } from './operations/operations.component';
 import { OrderComponent } from './order/order.component';
 
+import { MatExpansionModule } from '@angular/material/expansion';
+
 @NgModule({
   declarations: [
     EvaluationComponent,
@@ -58,7 +60,8 @@ import { OrderComponent } from './order/order.component';
     MatDialogModule,
     MatProgressSpinnerModule,
     MatPaginatorModule,
-    MatIconModule
+    MatIconModule,
+    MatExpansionModule
   ],
 })
 export class OptimizerModule {}

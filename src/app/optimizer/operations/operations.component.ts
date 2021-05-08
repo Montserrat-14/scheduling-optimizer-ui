@@ -1,19 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { FormsService } from './../services/forms.service';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-operations',
   templateUrl: './operations.component.html',
-  styleUrls: ['./operations.component.css']
+  styleUrls: ['./operations.component.css'],
 })
-export class OperationsComponent implements OnInit {
-  private readonly MOCK_JOBS: Array<{ name: string, description?: string }> =
-  [
-    { name: 'Job1' },
-    { name: 'Job2' },
-    { name: 'Job3' },
-  ]
+export class OperationsComponent implements OnInit, OnDestroy {
+  private readonly MOCK_JOBS: Array<{ name: string; description?: string }> = [
+    { name: 'Job1', description: 'This is the Job1' },
+    { name: 'Job2', description: 'This is the Job2' },
+    { name: 'Job3', description: 'This is the Job3' },
+  ];
 
   public operationsForm: FormGroup;
   operationsArrayForm$: Observable<any>;
@@ -26,20 +27,39 @@ export class OperationsComponent implements OnInit {
     this._operationsArrayForm = value;
   }
 
-  constructor(private _formBuilder: FormBuilder) {
-    this.operationsForm = this._formBuilder.group({
-      jobOperations: this._formBuilder.array([])
-    },
-    { updateOn:'blur' });
+  private jobsSubscription: Subscription;
+
+  constructor(
+    private _formBuilder: FormBuilder,
+    private formsService: FormsService
+  ) {
+    this.operationsForm = this._formBuilder.group(
+      {
+        jobOperations: this._formBuilder.array([]),
+      },
+      { updateOn: 'blur' }
+    );
 
     this.operationsArrayForm$ = this.operationsArrayForm.valueChanges;
   }
 
   ngOnInit(): void {
-    this.operationsArrayForm = this.operationsForm.get('resources') as FormArray;
-    this.MOCK_JOBS.forEach(job => {
-      this.operationsArrayForm.push(this.createJobItem(job.name, job.description));
-    });
+    this.jobsSubscription = this.formsService.currentJobs$
+      .pipe(filter((jobs) => jobs != null))
+      .subscribe((jobs) => {
+        this.operationsForm.setControl('jobOperations', this._formBuilder.array([]))
+
+        this.operationsArrayForm = this.operationsForm.get(
+          'jobOperations'
+        ) as FormArray;
+
+        (jobs as unknown as Array<{ name: string, description: string }>).forEach((job) => {
+          this.operationsArrayForm.push(
+            this.createJobItem(job.name, job.description)
+          );
+        });
+
+      });
   }
 
   createJobItem(name: string, description?: string): FormGroup {
@@ -50,9 +70,9 @@ export class OperationsComponent implements OnInit {
         description: [description ? description : null],
       },
       {
-        updateOn: 'blur'
+        updateOn: 'blur',
       }
-    )
+    );
   }
 
   checkAllFormControls(group: FormGroup | FormArray) {
@@ -65,5 +85,11 @@ export class OperationsComponent implements OnInit {
         currControl.updateValueAndValidity();
       }
     });
+  }
+
+  ngOnDestroy() {
+    if (this.jobsSubscription) {
+      this.jobsSubscription.unsubscribe();
+    }
   }
 }
