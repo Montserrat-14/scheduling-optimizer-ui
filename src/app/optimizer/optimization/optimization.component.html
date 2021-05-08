@@ -1,0 +1,20 @@
+<form [formGroup]="optimizationForm">
+  <h3 class="mat-title">Please indicate the optimization objectives for your order:</h3>
+
+  <mat-selection-list formControlName="evaluationPoints">
+    <mat-list-option *ngFor="let objective of OBJECTIVES" [value]="objective.value">
+      {{ objective.name }}
+    </mat-list-option>
+  </mat-selection-list>
+
+  <div style="display: flex; flex-direction: row; justify-content: flex-end; margin-top: 20px;">
+    <div>
+      <button mat-fab aria-label="Previous Page" matStepperPrevious>
+        <mat-icon>navigate_before</mat-icon>
+      </button>
+      <button mat-fab color="primary" aria-label="Next Page" matStepperNext>
+        <mat-icon>navigate_next</mat-icon>
+      </button>
+    </div>
+  </div>
+</form>
