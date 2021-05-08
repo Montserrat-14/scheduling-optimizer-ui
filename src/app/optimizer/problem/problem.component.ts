@@ -1,4 +1,3 @@
-import { OperationsComponent } from './../operations/operations.component';
 import { ResourcesComponent as ResourceComponent } from '../resource/resource.component';
 import {
   ChangeDetectorRef,
@@ -12,10 +11,11 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { DurationComponent } from '../duration/duration.component';
-import { EvaluationComponent } from '../evaluation/evaluation.component';
 import { LoadingDialogComponent } from '../loading-dialog/loading-dialog.component';
 import { ProblemService } from '../services/problem.service';
 import { OrderComponent } from '../order/order.component';
+import { OperationsComponent } from '../operations/operations.component';
+import { OptimizationComponent } from '../optimization/optimization.component';
 
 @Component({
   selector: 'app-problem',
@@ -28,7 +28,7 @@ export class ProblemComponent implements OnInit, AfterViewInit {
   @ViewChild(OrderComponent) descriptionComponent: OrderComponent;
   @ViewChild(ResourceComponent) resourcesComponent: ResourceComponent;
   @ViewChild(OperationsComponent) operationsComponent: OperationsComponent
-  @ViewChild(EvaluationComponent) evaluationComponent: EvaluationComponent;
+  @ViewChild(OptimizationComponent) optimizationComponent: OptimizationComponent;
   @ViewChild(DurationComponent) durationComponent: DurationComponent;
 
   get formDescription() {
@@ -49,9 +49,9 @@ export class ProblemComponent implements OnInit, AfterViewInit {
       : null;
   }
 
-  get formEvaluation() {
-    return this.evaluationComponent
-      ? this.evaluationComponent.evaluationForm
+  get formOptimization() {
+    return this.optimizationComponent
+      ? this.optimizationComponent.optimizationForm
       : null;
   }
 
@@ -79,7 +79,7 @@ export class ProblemComponent implements OnInit, AfterViewInit {
       description: this.formDescription,
       resources: this.formResources,
       operations: this.formOperations,
-      evaluation: this.formEvaluation,
+      optimization: this.formOptimization,
       duration: this.formDuration,
     });
   }

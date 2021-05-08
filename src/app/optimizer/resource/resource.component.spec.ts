@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ResourcesComponent } from './resource.component';
 
-describe('TasksComponent', () => {
+describe('ResourcesComponent', () => {
   let component: ResourcesComponent;
   let fixture: ComponentFixture<ResourcesComponent>;
 
