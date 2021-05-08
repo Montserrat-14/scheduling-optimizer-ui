@@ -5,6 +5,9 @@
   <mat-step [stepControl]="resources.resourcesForm" label="Resources">
     <app-resource #resources></app-resource>
   </mat-step>
+  <mat-step [stepControl]="operations.operationsForm" label="Operations">
+    <app-operations #operations></app-operations>
+  </mat-step>
   <mat-step [stepControl]="evaluation.evaluationForm" label="Evaluation">
     <app-evaluation #evaluation></app-evaluation>
   </mat-step>

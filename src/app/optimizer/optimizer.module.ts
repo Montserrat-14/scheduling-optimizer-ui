@@ -12,7 +12,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { OrderComponent } from './order/order.component';
 import { CommonModule } from '@angular/common';
 
 import { MatTableModule } from '@angular/material/table';
@@ -27,6 +26,12 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { ResourcesComponent } from './resource/resource.component';
 import { MatIconModule } from '@angular/material/icon';
+import { OperationsComponent } from './operations/operations.component';
+import { OrderComponent } from './order/order.component';
+
+import { MatExpansionModule } from '@angular/material/expansion';
+
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [
@@ -39,6 +44,7 @@ import { MatIconModule } from '@angular/material/icon';
     OrderComponent,
     LoadingDialogComponent,
     ResourcesComponent,
+    OperationsComponent,
   ],
   imports: [
     CommonModule,
@@ -56,7 +62,9 @@ import { MatIconModule } from '@angular/material/icon';
     MatDialogModule,
     MatProgressSpinnerModule,
     MatPaginatorModule,
-    MatIconModule
+    MatIconModule,
+    MatExpansionModule,
+    DragDropModule
   ],
 })
 export class OptimizerModule {}

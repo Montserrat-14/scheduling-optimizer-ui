@@ -1,0 +1,59 @@
+<form [formGroup]="operationsForm">
+  <h3 class="mat-title">Please indicate the sequence of operations for each job:</h3>
+
+  <mat-accordion class="example-headers-align" multi>
+    <div formArrayName="jobOperations"
+      *ngFor="let job of operationsForm.get('jobOperations')['controls']; let i = index">
+      <mat-expansion-panel [formGroupName]="i">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            {{ job.value.name ? job.value.name : "" }}
+          </mat-panel-title>
+          <mat-panel-description>
+            {{ job.value.description ? job.value.description : "" }}
+            <mat-icon>work</mat-icon>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <!-- Corpo do cartão -->
+        <h4 class="mat-title">Please insert the operations of the job in sequence (machine + estimated time):</h4>
+
+        <div style="display: flex; flex-direction: row;">
+          <mat-form-field appearance="outline">
+            <mat-select [(value)]="selectedResources[i]" placeholder="Resource" style="flex: 3; align-self: center;">
+              <mat-option *ngFor="let resource of currentResources" [value]="resource.id">
+                {{resource.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <input type="number" matInput placeholder="Estimated Time" [value]="selectedTimes[i]" (change)="setSelectedTimes($event, i)" style="flex: 3">
+          </mat-form-field>
+          <button mat-fab color="primary" aria-label="Add new row" (click)="addOperation(i)">
+            <mat-icon>add</mat-icon>
+          </button>
+        </div>
+
+        <h4 class="mat-title">List of operations:</h4>
+        <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event, job.value.operations)">
+          <div class="example-box" *ngFor="let operation of job.value.operations" cdkDrag>
+            {{ "Machine id: " + operation.machineId + ", Estimated Time: " + operation.estimatedTime }}
+          </div>
+        </div>
+
+      </mat-expansion-panel>
+    </div>
+  </mat-accordion>
+
+
+  <div style="display: flex; flex-direction: row; justify-content: flex-end; margin-top: 20px;">
+    <div>
+      <button mat-fab aria-label="Previous Page" matStepperPrevious>
+        <mat-icon>navigate_before</mat-icon>
+      </button>
+      <button mat-fab color="primary" aria-label="Next Page" matStepperNext>
+        <mat-icon>navigate_next</mat-icon>
+      </button>
+    </div>
+  </div>
+</form>

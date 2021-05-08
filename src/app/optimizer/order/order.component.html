@@ -19,8 +19,7 @@
     <div class="order-delete-header"></div>
   </div>
 
-  <div formArrayName="jobs"
-    *ngFor="let order of orderForm.get('jobs')['controls']; let i = index">
+  <div formArrayName="jobs" *ngFor="let order of orderForm.get('jobs')['controls']; let i = index">
     <div class="order-row" [formGroupName]="i">
       <div class="order-name">
         <mat-form-field appearance="outline">
@@ -33,15 +32,18 @@
         </mat-form-field>
       </div>
       <div class="order-delete">
-        <button *ngIf="orderForm.get('jobs')['controls'].length > 1"
-          mat-fab color="primary" aria-label="Delete this row" (click)="deleteRow(i)">
+        <button *ngIf="orderForm.get('jobs')['controls'].length > 1" mat-fab color="primary"
+          aria-label="Delete this row" (click)="deleteRow(i)">
           <mat-icon>delete</mat-icon>
         </button>
       </div>
     </div>
   </div>
 
-  <div class="buttonArea">
+  <div style="display: flex; flex-direction: row; justify-content: space-between;">
+    <button mat-fab color="primary" aria-label="Add new row" (click)="addRow()">
+      <mat-icon>add</mat-icon>
+    </button>
     <button mat-fab color="primary" aria-label="Next Page" matStepperNext>
       <mat-icon>navigate_next</mat-icon>
     </button>

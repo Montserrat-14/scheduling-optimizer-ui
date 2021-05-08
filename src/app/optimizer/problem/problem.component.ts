@@ -1,3 +1,4 @@
+import { OperationsComponent } from './../operations/operations.component';
 import { ResourcesComponent as ResourceComponent } from '../resource/resource.component';
 import {
   ChangeDetectorRef,
@@ -10,11 +11,11 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { OrderComponent } from '../order/order.component';
 import { DurationComponent } from '../duration/duration.component';
 import { EvaluationComponent } from '../evaluation/evaluation.component';
 import { LoadingDialogComponent } from '../loading-dialog/loading-dialog.component';
 import { ProblemService } from '../services/problem.service';
+import { OrderComponent } from '../order/order.component';
 
 @Component({
   selector: 'app-problem',
@@ -26,6 +27,7 @@ export class ProblemComponent implements OnInit, AfterViewInit {
 
   @ViewChild(OrderComponent) descriptionComponent: OrderComponent;
   @ViewChild(ResourceComponent) resourcesComponent: ResourceComponent;
+  @ViewChild(OperationsComponent) operationsComponent: OperationsComponent
   @ViewChild(EvaluationComponent) evaluationComponent: EvaluationComponent;
   @ViewChild(DurationComponent) durationComponent: DurationComponent;
 
@@ -35,9 +37,15 @@ export class ProblemComponent implements OnInit, AfterViewInit {
       : null;
   }
 
-  get formTasks() {
+  get formResources() {
     return this.resourcesComponent
       ? this.resourcesComponent.resourcesForm
+      : null;
+  }
+
+  get formOperations() {
+    return this.operationsComponent
+      ? this.operationsComponent.operationsForm
       : null;
   }
 
@@ -69,7 +77,8 @@ export class ProblemComponent implements OnInit, AfterViewInit {
   buildFullForm(): FormGroup {
     return this.fb.group({
       description: this.formDescription,
-      tasks: this.resourcesComponent,
+      resources: this.formResources,
+      operations: this.formOperations,
       evaluation: this.formEvaluation,
       duration: this.formDuration,
     });

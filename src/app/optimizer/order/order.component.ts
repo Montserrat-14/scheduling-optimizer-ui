@@ -1,13 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { FormsService } from './../services/forms.service';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-order',
   templateUrl: './order.component.html',
   styleUrls: ['./order.component.css']
 })
-export class OrderComponent implements OnInit {
+export class OrderComponent implements OnInit, OnDestroy {
   public orderForm: FormGroup;
   orderJobsArrayForm$: Observable<any>;
   private _orderJobsArrayForm: FormArray;
@@ -19,8 +20,11 @@ export class OrderComponent implements OnInit {
     this._orderJobsArrayForm = value;
   }
 
+  private jobsSubscription: Subscription;
+
   constructor(
-    private _formBuilder: FormBuilder
+    private _formBuilder: FormBuilder,
+    private formsService: FormsService
   ) {
     this.orderForm = this._formBuilder.group({
       name: ['', Validators.required],
@@ -36,6 +40,10 @@ export class OrderComponent implements OnInit {
       this.orderJobsArrayForm = this.orderForm.get('jobs') as FormArray;
       this.orderJobsArrayForm.push(this.createJobItem());
     }
+
+    this.jobsSubscription = this.orderJobsArrayForm$.subscribe((jobs: FormArray) => {
+      this.formsService.setJobs(jobs);
+    });
   }
 
   createJobItem(): FormGroup {
@@ -73,6 +81,12 @@ export class OrderComponent implements OnInit {
   deleteRow(index: number): void {
     if (this.orderJobsArrayForm.controls.length > 1) {
       this.orderJobsArrayForm.removeAt(index);
+    }
+  }
+
+  ngOnDestroy() {
+    if (this.jobsSubscription) {
+      this.jobsSubscription.unsubscribe();
     }
   }
 
