@@ -1,0 +1,31 @@
+{
+  "order": {
+    "name": "",
+    "description": "",
+    "jobs": [
+      {
+        "name": "",
+        "description": "",
+        "operations": [
+          {
+            "resourceId": "",
+            "estimatedTime": "",
+            "index": ""
+          }
+        ]
+      }
+    ]
+  },
+  "resource": {
+    "type": "",
+    "resources": [
+      {
+        "id": "",
+        "name": "",
+        "quantity": "",
+        "cost": "",
+        "description": ""
+      }
+    ]
+  }
+}
