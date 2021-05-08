@@ -18,7 +18,8 @@
     "objectives": {
       "totalTime": true,
       "cost": false
-    }
+    },
+    "duration": ""
   },
   "resource": {
     "type": "",
