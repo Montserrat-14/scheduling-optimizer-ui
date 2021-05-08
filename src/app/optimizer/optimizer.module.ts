@@ -31,6 +31,8 @@ import { OrderComponent } from './order/order.component';
 
 import { MatExpansionModule } from '@angular/material/expansion';
 
+import { DragDropModule } from '@angular/cdk/drag-drop';
+
 @NgModule({
   declarations: [
     EvaluationComponent,
@@ -61,7 +63,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
     MatProgressSpinnerModule,
     MatPaginatorModule,
     MatIconModule,
-    MatExpansionModule
+    MatExpansionModule,
+    DragDropModule
   ],
 })
 export class OptimizerModule {}

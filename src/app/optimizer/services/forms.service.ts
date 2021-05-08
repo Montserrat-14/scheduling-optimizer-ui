@@ -12,6 +12,8 @@ export class FormsService {
   private currentResources = new Subject<FormArray>();
   currentResources$ = this.currentResources.asObservable();
 
+  private uniqueResourceId = new BehaviorSubject<number>(1);
+
   constructor() { }
 
   setJobs(jobs: FormArray): void {
@@ -20,5 +22,13 @@ export class FormsService {
 
   setResources(resources: FormArray) {
     this.currentResources.next(resources);
+  }
+
+  increaseId() {
+    this.uniqueResourceId.next(this.uniqueResourceId.getValue() + 1);
+  }
+
+  getId() {
+    return this.uniqueResourceId.getValue();
   }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 import { FormsService } from '../services/forms.service';
@@ -8,7 +8,7 @@ import { FormsService } from '../services/forms.service';
   templateUrl: './resource.component.html',
   styleUrls: ['./resource.component.css'],
 })
-export class ResourcesComponent implements OnInit {
+export class ResourcesComponent implements OnInit, OnDestroy {
   public readonly RESOURCE_TYPES: Array<{
     viewValue: string;
     value: string;
@@ -61,8 +61,9 @@ export class ResourcesComponent implements OnInit {
   }
 
   createResourceItem(): FormGroup {
-    return this._formBuilder.group(
+    const formGroup = this._formBuilder.group(
       {
+        id: [this.formsService.getId()],
         name: [null, [Validators.required, Validators.maxLength(23)]],
         quantity: [null, [Validators.required]],
         cost: [null, [Validators.required]],
@@ -72,6 +73,8 @@ export class ResourcesComponent implements OnInit {
         updateOn: 'blur',
       }
     );
+    this.formsService.increaseId();
+    return formGroup;
   }
 
   addRow(): void {
@@ -98,5 +101,9 @@ export class ResourcesComponent implements OnInit {
     if (this.resourcesArrayForm.controls.length > 1) {
       this.resourcesArrayForm.removeAt(index);
     }
+  }
+
+  ngOnDestroy() {
+    if (this.resourceSubscription) this.resourceSubscription.unsubscribe();
   }
 }

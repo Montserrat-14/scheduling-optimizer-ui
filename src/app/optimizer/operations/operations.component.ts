@@ -3,8 +3,10 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 export interface Resource {
+  id: string;
   name: string;
   quantity: number;
   cost: number;
@@ -14,6 +16,12 @@ export interface Resource {
 export interface Job {
   name: string;
   description: string;
+}
+
+export interface Operation {
+  machineId: number,
+  machineName?: string,
+  estimatedTime: number,
 }
 
 @Component({
@@ -34,9 +42,9 @@ export class OperationsComponent implements OnInit, OnDestroy {
   }
 
   currentResources: Array<Resource> = [];
-  selectedResource: Resource;
+  selectedResources: Array<number> = [];
 
-  selectedTime: number;
+  selectedTimes: Array<number>;
 
   private jobsSubscription: Subscription;
   private resourcesSubscription: Subscription;
@@ -68,18 +76,38 @@ export class OperationsComponent implements OnInit, OnDestroy {
           'jobOperations'
         ) as FormArray;
 
-        ((jobs as unknown) as Array<Job>).forEach((job) => {
+        const currentJobs = ((jobs as unknown) as Array<Job>);
+
+        currentJobs.forEach((job) => {
           this.operationsArrayForm.push(
             this.createJobItem(job.name, job.description)
           );
         });
+
+        this.clearSelectedTimesResources();
+        this.clearAllOperations();
       });
 
     this.resourcesSubscription = this.formsService.currentResources$
       .pipe(filter((resources) => resources != null))
       .subscribe((resources) => {
-        this.currentResources = (resources as unknown) as Array<Resource>;
+        const currResources = (resources as unknown) as Array<Resource>
+        this.currentResources = currResources;
+
+        this.clearSelectedTimesResources();
+        this.clearAllOperations();
       });
+  }
+
+  clearAllOperations() {
+    this.operationsArrayForm.controls.forEach(jobs => {
+      jobs.get('operations').patchValue([]);
+    });
+  }
+
+  clearSelectedTimesResources() {
+    this.selectedTimes = new Array<number>(this.operationsArrayForm.controls.length);
+    this.selectedResources = new Array<number>(this.operationsArrayForm.controls.length);
   }
 
   createJobItem(name: string, description?: string): FormGroup {
@@ -107,8 +135,24 @@ export class OperationsComponent implements OnInit, OnDestroy {
     });
   }
 
-  addOperation() {
+  addOperation(index: number) {
+    const currentOperations = this.operationsArrayForm.at(index).get('operations').value as Array<Operation>;
+    if (this.selectedResources[index] != null && this.selectedTimes[index] != null) {
+      currentOperations.push({
+        machineId: this.selectedResources[index],
+        estimatedTime: this.selectedTimes[index]
+      })
+      this.operationsArrayForm.at(index).get('operations').patchValue(currentOperations);
+    }
+  }
 
+  setSelectedTimes(event: Event, index: number) {
+    console.log(event);
+    this.selectedTimes[index] = Number((event.target as HTMLInputElement).value)
+  }
+
+  drop(event: CdkDragDrop<Operation[]>, operations: Operation[]) {
+    moveItemInArray(operations, event.previousIndex, event.currentIndex);
   }
 
   ngOnDestroy() {
