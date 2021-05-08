@@ -4,18 +4,24 @@ import { FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
+export interface Resource {
+  name: string;
+  quantity: number;
+  cost: number;
+  description?: string;
+}
+
+export interface Job {
+  name: string;
+  description: string;
+}
+
 @Component({
   selector: 'app-operations',
   templateUrl: './operations.component.html',
   styleUrls: ['./operations.component.css'],
 })
 export class OperationsComponent implements OnInit, OnDestroy {
-  private readonly MOCK_JOBS: Array<{ name: string; description?: string }> = [
-    { name: 'Job1', description: 'This is the Job1' },
-    { name: 'Job2', description: 'This is the Job2' },
-    { name: 'Job3', description: 'This is the Job3' },
-  ];
-
   public operationsForm: FormGroup;
   operationsArrayForm$: Observable<any>;
   private _operationsArrayForm: FormArray;
@@ -27,7 +33,13 @@ export class OperationsComponent implements OnInit, OnDestroy {
     this._operationsArrayForm = value;
   }
 
+  currentResources: Array<Resource> = [];
+  selectedResource: Resource;
+
+  selectedTime: number;
+
   private jobsSubscription: Subscription;
+  private resourcesSubscription: Subscription;
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -47,18 +59,26 @@ export class OperationsComponent implements OnInit, OnDestroy {
     this.jobsSubscription = this.formsService.currentJobs$
       .pipe(filter((jobs) => jobs != null))
       .subscribe((jobs) => {
-        this.operationsForm.setControl('jobOperations', this._formBuilder.array([]))
+        this.operationsForm.setControl(
+          'jobOperations',
+          this._formBuilder.array([])
+        );
 
         this.operationsArrayForm = this.operationsForm.get(
           'jobOperations'
         ) as FormArray;
 
-        (jobs as unknown as Array<{ name: string, description: string }>).forEach((job) => {
+        ((jobs as unknown) as Array<Job>).forEach((job) => {
           this.operationsArrayForm.push(
             this.createJobItem(job.name, job.description)
           );
         });
+      });
 
+    this.resourcesSubscription = this.formsService.currentResources$
+      .pipe(filter((resources) => resources != null))
+      .subscribe((resources) => {
+        this.currentResources = (resources as unknown) as Array<Resource>;
       });
   }
 
@@ -87,9 +107,16 @@ export class OperationsComponent implements OnInit, OnDestroy {
     });
   }
 
+  addOperation() {
+
+  }
+
   ngOnDestroy() {
     if (this.jobsSubscription) {
       this.jobsSubscription.unsubscribe();
+    }
+    if (this.resourcesSubscription) {
+      this.resourcesSubscription.unsubscribe();
     }
   }
 }

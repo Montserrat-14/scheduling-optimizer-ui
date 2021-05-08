@@ -1,18 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
+import { FormsService } from '../services/forms.service';
 
 @Component({
   selector: 'app-resource',
   templateUrl: './resource.component.html',
-  styleUrls: ['./resource.component.css']
+  styleUrls: ['./resource.component.css'],
 })
 export class ResourcesComponent implements OnInit {
-
-  public readonly RESOURCE_TYPES: Array<{ viewValue: string, value: string }> =
-  [
+  public readonly RESOURCE_TYPES: Array<{
+    viewValue: string;
+    value: string;
+  }> = [
     { viewValue: 'Machines', value: 'Machines' },
-    { viewValue: 'Employees', value: 'Employees' }
+    { viewValue: 'Employees', value: 'Employees' },
   ];
 
   public resourcesForm: FormGroup;
@@ -26,21 +28,36 @@ export class ResourcesComponent implements OnInit {
     this._resourcesArrayForm = value;
   }
 
-  constructor(private _formBuilder: FormBuilder) {
-    this.resourcesForm = this._formBuilder.group({
-      type: [null, [Validators.required]],
-      resources: this._formBuilder.array([])
-    },
-    { updateOn:'blur' });
+  private resourceSubscription: Subscription;
+
+  constructor(
+    private _formBuilder: FormBuilder,
+    private formsService: FormsService
+  ) {
+    this.resourcesForm = this._formBuilder.group(
+      {
+        type: [null, [Validators.required]],
+        resources: this._formBuilder.array([]),
+      },
+      { updateOn: 'blur' }
+    );
 
     this.resourcesArrayForm$ = this.resourcesArrayForm.valueChanges;
   }
 
   ngOnInit(): void {
     if (this.resourcesArrayForm.controls.length === 0) {
-      this.resourcesArrayForm = this.resourcesForm.get('resources') as FormArray;
+      this.resourcesArrayForm = this.resourcesForm.get(
+        'resources'
+      ) as FormArray;
       this.resourcesArrayForm.push(this.createResourceItem());
     }
+
+    this.resourceSubscription = this.resourcesArrayForm$.subscribe(
+      (resources: FormArray) => {
+        this.formsService.setResources(resources);
+      }
+    );
   }
 
   createResourceItem(): FormGroup {
@@ -52,9 +69,9 @@ export class ResourcesComponent implements OnInit {
         description: [null],
       },
       {
-        updateOn: 'blur'
+        updateOn: 'blur',
       }
-    )
+    );
   }
 
   addRow(): void {
@@ -82,5 +99,4 @@ export class ResourcesComponent implements OnInit {
       this.resourcesArrayForm.removeAt(index);
     }
   }
-
 }

@@ -15,19 +15,26 @@
           </mat-panel-description>
         </mat-expansion-panel-header>
 
-        <mat-form-field>
-          <mat-label>First name</mat-label>
-          <input matInput>
-        </mat-form-field>
+        <!-- Corpo do cartão -->
+        <h4 class="mat-title">Please select one resource for each job and the time in there:</h4>
 
-        <mat-form-field>
-          <mat-label>Age</mat-label>
-          <input matInput type="number" min="1">
-        </mat-form-field>
+        <div style="display: flex; flex-direction: row;">
+
+          <mat-select [(value)]="selectedResource" placeholder="Resource" style="flex: 3; align-self: center;">
+            <mat-option *ngFor="let type of currentResources" [value]="type.name">
+              {{type.name}}
+            </mat-option>
+          </mat-select>
+          <input type="number" matInput placeholder="Estimated Time" [value]="selectedTime" style="flex: 3">
+          <button mat-fab color="primary" aria-label="Add new row" (click)="addOperation()">
+            <mat-icon>add</mat-icon>
+          </button>
+        </div>
 
       </mat-expansion-panel>
     </div>
   </mat-accordion>
+
 
   <div style="display: flex; flex-direction: row; justify-content: flex-end; margin-top: 20px;">
     <div>
