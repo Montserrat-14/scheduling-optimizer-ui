@@ -1,0 +1,58 @@
+{
+    "description": {
+        "name": "Integration Test",
+        "description": "Test of integration",
+        "jobs": [{
+            "name": "Job Test 1",
+            "description": "This is the job 1"
+        }, {
+            "name": "Job Test 2",
+            "description": "This is the job 2"
+        }]
+    },
+    "resources": {
+        "type": "Machines",
+        "resources": [{
+            "id": 1,
+            "name": "Machine Test A",
+            "quantity": 5,
+            "cost": 10000,
+            "description": null
+        }, {
+            "id": 2,
+            "name": "Machine Test B",
+            "quantity": 10,
+            "cost": 20000,
+            "description": null
+        }]
+    },
+    "operations": {
+        "jobOperations": [{
+            "name": "Job Test 1",
+            "operations": [{
+                "machineId": 1,
+                "estimatedTime": 5
+            }, {
+                "machineId": 2,
+                "estimatedTime": 10
+            }],
+            "description": "This is the job 1"
+        }, {
+            "name": "Job Test 2",
+            "operations": [{
+                "machineId": 1,
+                "estimatedTime": 5
+            }, {
+                "machineId": 2,
+                "estimatedTime": 10
+            }],
+            "description": "This is the job 2"
+        }]
+    },
+    "optimization": {
+        "evaluationPoints": ["time"]
+    },
+    "duration": {
+        "duration": 11
+    }
+}

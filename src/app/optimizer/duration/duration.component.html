@@ -16,7 +16,13 @@
 </div>
 </div>
 
-<div class="buttonArea">
-  <button mat-raised-button matStepperPrevious>Back</button>
-  <button mat-raised-button color="primary" matStepperNext>Next</button>
+<div style="display: flex; flex-direction: row; justify-content: flex-end; margin-top: 20px;">
+  <div>
+    <button mat-fab aria-label="Previous Page" matStepperPrevious>
+      <mat-icon>navigate_before</mat-icon>
+    </button>
+    <button mat-fab color="primary" aria-label="Next Page" matStepperNext>
+      <mat-icon>navigate_next</mat-icon>
+    </button>
+  </div>
 </div>

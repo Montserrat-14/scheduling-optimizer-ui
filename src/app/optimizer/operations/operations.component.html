@@ -40,7 +40,7 @@
 
           <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event, job.value.operations)">
             <div class="example-box" *ngFor="let operation of job.value.operations" cdkDrag>
-              {{ "Machine id: " + operation.machineId + ", Estimated Time: " + operation.estimatedTime }}
+              {{ "Machine id: " + operation.resourceId + ", Estimated Time: " + operation.estimatedTime }}
             </div>
           </div>
 

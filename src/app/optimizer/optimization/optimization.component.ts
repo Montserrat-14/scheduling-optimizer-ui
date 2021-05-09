@@ -15,7 +15,7 @@ export class OptimizationComponent implements OnInit {
   public optimizationForm: FormGroup;
 
   readonly OBJECTIVES: Array<Objective> = [
-    { name: "Total Time", value: "time" },
+    { name: "Total Time", value: "totalTime" },
     { name: "Total Cost", value: "cost" }
   ];
 
