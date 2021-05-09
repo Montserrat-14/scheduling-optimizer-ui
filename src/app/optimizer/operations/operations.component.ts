@@ -4,25 +4,9 @@ import { FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-
-export interface Resource {
-  id: string;
-  name: string;
-  quantity: number;
-  cost: number;
-  description?: string;
-}
-
-export interface Job {
-  name: string;
-  description: string;
-}
-
-export interface Operation {
-  machineId: number,
-  machineName?: string,
-  estimatedTime: number,
-}
+import { Job } from 'src/app/interfaces/Job';
+import { Operation } from 'src/app/interfaces/Operation';
+import { Resource } from 'src/app/interfaces/Resource';
 
 @Component({
   selector: 'app-operations',
@@ -139,10 +123,12 @@ export class OperationsComponent implements OnInit, OnDestroy {
     const currentOperations = this.operationsArrayForm.at(index).get('operations').value as Array<Operation>;
     if (this.selectedResources[index] != null && this.selectedTimes[index] != null) {
       currentOperations.push({
-        machineId: this.selectedResources[index],
-        estimatedTime: this.selectedTimes[index]
-      })
+        resourceId: this.selectedResources[index],
+        estimatedTime: this.selectedTimes[index],
+        index: currentOperations.length
+      });
       this.operationsArrayForm.at(index).get('operations').patchValue(currentOperations);
+      this.clearSelectedTimesResources();
     }
   }
 
@@ -161,6 +147,7 @@ export class OperationsComponent implements OnInit, OnDestroy {
 
   drop(event: CdkDragDrop<Operation[]>, operations: Operation[]) {
     moveItemInArray(operations, event.previousIndex, event.currentIndex);
+    operations.map((op, index) => op.index = index);
   }
 
   ngOnDestroy() {
