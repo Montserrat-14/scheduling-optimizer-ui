@@ -27,7 +27,8 @@
             </mat-select>
           </mat-form-field>
           <mat-form-field appearance="outline">
-            <input type="number" matInput placeholder="Estimated Time" [value]="selectedTimes[i]" (change)="setSelectedTimes($event, i)" style="flex: 3">
+            <input type="number" matInput placeholder="Estimated Time" [value]="selectedTimes[i]"
+              (change)="setSelectedTimes($event, i)" style="flex: 3">
           </mat-form-field>
           <button mat-fab color="primary" aria-label="Add new row" (click)="addOperation(i)">
             <mat-icon>add</mat-icon>
@@ -35,12 +36,23 @@
         </div>
 
         <h4 class="mat-title">List of operations:</h4>
-        <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event, job.value.operations)">
-          <div class="example-box" *ngFor="let operation of job.value.operations" cdkDrag>
-            {{ "Machine id: " + operation.machineId + ", Estimated Time: " + operation.estimatedTime }}
-          </div>
-        </div>
+        <div style="display: flex; flex-direction: row;">
 
+          <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event, job.value.operations)">
+            <div class="example-box" *ngFor="let operation of job.value.operations" cdkDrag>
+              {{ "Machine id: " + operation.machineId + ", Estimated Time: " + operation.estimatedTime }}
+            </div>
+          </div>
+
+          <div>
+            <div *ngFor="let operation of job.value.operations; let j = index">
+              <button mat-fab color="primary" aria-label="Delete this row" (click)="deleteOperation(i, j)" style="margin-bottom: 4px; margin-top: 2px;">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+          </div>
+
+        </div>
       </mat-expansion-panel>
     </div>
   </mat-accordion>

@@ -146,6 +146,14 @@ export class OperationsComponent implements OnInit, OnDestroy {
     }
   }
 
+  deleteOperation(jobIndex: number, operationIndex: number) {
+    const currentOperations = this.operationsArrayForm.at(jobIndex).get('operations').value as Array<Operation>;
+    if (currentOperations.length > 0) {
+      currentOperations.splice(operationIndex, 1);
+    }
+    this.operationsArrayForm.at(jobIndex).get('operations').patchValue(currentOperations);
+  }
+
   setSelectedTimes(event: Event, index: number) {
     console.log(event);
     this.selectedTimes[index] = Number((event.target as HTMLInputElement).value)
