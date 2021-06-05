@@ -12,7 +12,7 @@ export class FormsService {
   private currentResources = new Subject<FormArray>();
   currentResources$ = this.currentResources.asObservable();
 
-  private uniqueResourceId = new BehaviorSubject<number>(1);
+  private uniqueResourceId = new BehaviorSubject<number>(0);
 
   constructor() { }
 
