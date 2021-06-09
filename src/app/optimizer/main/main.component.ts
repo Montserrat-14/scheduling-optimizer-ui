@@ -1,12 +1,11 @@
-import { ResultService } from './../services/result.service';
 import { Component, OnInit } from '@angular/core';
-import { ProblemService } from '../services/problem.service';
+import { OrderService } from '../services/order.service';
 
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.css'],
-  providers: [ProblemService, ResultService],
+  providers: [OrderService],
 })
 export class MainComponent implements OnInit {
 

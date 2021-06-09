@@ -12,10 +12,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { DurationComponent } from '../duration/duration.component';
 import { LoadingDialogComponent } from '../loading-dialog/loading-dialog.component';
-import { ProblemService } from '../services/problem.service';
 import { OrderComponent } from '../order/order.component';
 import { OperationsComponent } from '../operations/operations.component';
 import { OptimizationComponent } from '../optimization/optimization.component';
+import { OrderService } from '../services/order.service';
 
 @Component({
   selector: 'app-problem',
@@ -60,7 +60,7 @@ export class ProblemComponent implements OnInit, AfterViewInit {
   }
 
   constructor(
-    public problemService: ProblemService,
+    public orderService: OrderService,
     private fb: FormBuilder,
     private cd: ChangeDetectorRef,
     public dialog: MatDialog,
@@ -92,11 +92,11 @@ export class ProblemComponent implements OnInit, AfterViewInit {
       disableClose: true
     });
 
-    this.problemService.getSolution(this.buildFullForm()).subscribe(
+    this.orderService.getSolution(this.buildFullForm()).subscribe(
       (res) => {
         dialogRef.close();
 
-        //this.problemService.setProblem(res);
+        this.orderService.setOrder(res);
 
         this.router.navigateByUrl('/optimizer/solution');
       },

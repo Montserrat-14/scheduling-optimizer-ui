@@ -4,7 +4,7 @@ export class Station {
   machines: Array<Machine>;
 
   deserialize(input: any): this {
-    this.machines = input.map(elem => new Machine().deserialize(elem));
+    this.machines = input.machines.map(elem => new Machine().deserialize(elem));
     return this;
   }
 }

@@ -1,0 +1,75 @@
+{
+  "solutions": [{
+    "objectives": [{
+      "name": "makespan",
+      "value": 11
+    }],
+    "stations": [{
+        "machines": [{
+          "name": "Machine A",
+          "operations": [{
+              "id": 3,
+              "job": "Job 1",
+              "startTime": 0,
+              "endTime": 2
+            },
+            {
+              "id": 0,
+              "job": "Job 0",
+              "startTime": 2,
+              "endTime": 5
+            }
+          ]
+        }]
+      },
+      {
+        "machines": [{
+          "name": "Machine B",
+          "operations": [{
+              "id": 6,
+              "job": "Job 2",
+              "startTime": 0,
+              "endTime": 4
+            },
+            {
+              "id": 1,
+              "job": "Job 0",
+              "startTime": 5,
+              "endTime": 7
+            },
+            {
+              "id": 5,
+              "job": "Job 1",
+              "startTime": 7,
+              "endTime": 11
+            }
+          ]
+        }]
+      },
+      {
+        "machines": [{
+          "name": "Machine C",
+          "operations": [{
+              "id": 4,
+              "job": "Job 1",
+              "startTime": 2,
+              "endTime": 3
+            },
+            {
+              "id": 7,
+              "job": "Job 2",
+              "startTime": 4,
+              "endTime": 7
+            },
+            {
+              "id": 2,
+              "job": "Job 0",
+              "startTime": 7,
+              "endTime": 9
+            }
+          ]
+        }]
+      }
+    ]
+  }]
+}

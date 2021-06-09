@@ -1,11 +1,12 @@
-import { ResultService } from './../services/result.service';
-import { ProblemService } from '../services/problem.service';
 import { Router } from '@angular/router';
 import { Component, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
 
 import { ChartType } from 'angular-google-charts';
+import { OrderService } from '../services/order.service';
+import { Order } from 'src/app/models/order.model';
+import resultPayload from '../../../result_payload.json';
 
 @Component({
   selector: 'app-solution',
@@ -15,26 +16,51 @@ import { ChartType } from 'angular-google-charts';
 export class SolutionComponent {
 
   chartType: ChartType;
-  myData: any;
   myFormatters: any;
+
+  order: Order;
+
+  solutionsData: Array<Array<Array<any>>>;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(
-    private problemService: ProblemService,
+    private orderService: OrderService,
     private router: Router,
-    private resultService: ResultService,
     public dialog: MatDialog
   ) {
+
+    // To remove after testing (2 next lines)
+    this.order = new Order().deserialize(resultPayload);
+    this.orderService.setOrder(this.order);
+
+    this.order = this.orderService.getOrder();
+    if (this.order == null) {
+      this.router.navigateByUrl('optimizer/problem');
+    }
+
+    this.solutionsData = [];
+
     this.chartType = ChartType.Timeline;
 
-    this.myData = [
-      ['London', 1, 3],
-      ['New York', 1, 3],
-      ['Paris', 1, 3],
-      ['Berlin', 1, 3],
-      ['Kairo', 1, 3],
-    ];
+    this.order.solutions.forEach(solution => {
+      const currSolutionData = [];
+
+      solution.stations.forEach(station => {
+        station.machines.forEach((machine, index) => {
+          machine.operations.forEach(operation => {
+            currSolutionData.push([
+              station.machines.length > 1 ? machine.name + ' ' + index : machine.name,
+              operation.job + ' (' + operation.id + ')',
+              operation.startTime,
+              operation.endTime
+            ]);
+          });
+        });
+      });
+
+      this.solutionsData.push(currSolutionData);
+    });
 
   }
 
