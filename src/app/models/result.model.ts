@@ -1,21 +1,13 @@
-import { Objective } from './objective.model';
-import { Solution } from './solution.model';
+import { Objective } from "./objective.model";
+import { Station } from "./station.model";
 
 export class Result {
-  solution: Solution;
-  objective: Objective;
+  stations: Array<Station>;
+  objectives: Array<Objective>;
 
   deserialize(input: any): this {
-    this.solution = new Solution().deserialize(input.solution);
-    this.objective = new Objective().deserialize(input.objective);
+    this.stations = input.map(elem => new Station().deserialize(elem));
+    this.objectives = input.map(elem => new Objective().deserialize(elem));
     return this;
-  }
-
-  getSolutionByIndex(index: number) {
-    return this.solution.variables[index].value;
-  }
-
-  getObjectiveByIndex(index: number) {
-    return this.objective.variables[index].value;
   }
 }

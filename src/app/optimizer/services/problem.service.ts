@@ -7,7 +7,6 @@ import { map } from 'rxjs/operators';
 import { Job } from 'src/app/interfaces/Job';
 import { Resource } from 'src/app/interfaces/Resource';
 import { environment } from 'src/environments/environment';
-import { Problem } from '../../models/problem.model';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -32,22 +31,21 @@ export interface OrderPayload {
 
 @Injectable()
 export class ProblemService {
-  private problem = new BehaviorSubject<Problem>(null);
+  private problem = new BehaviorSubject<any>(null);
   problem$ = this.problem.asObservable();
 
   constructor(private http: HttpClient) {}
 
   getSolution(
     fullForm: FormGroup
-  ): Observable<Problem> {
+  ): Observable<any> {
     const bodyPayload = this.buildBodyPayload(fullForm);
 
     return this.http.post(environment.baseUrl + 'sheduling', bodyPayload, httpOptions)
       .pipe(
         map(resp => {
-          const problem = new Problem().deserialize(resp)
-          console.log(problem);
-          return problem;
+          console.log(resp);
+          return resp;
         }))
   }
 
@@ -94,13 +92,5 @@ export class ProblemService {
     );
 
     return currResource;
-  }
-
-  setProblem(problem: Problem): void {
-    this.problem.next(problem);
-  }
-
-  getProblem(): Problem {
-    return this.problem.getValue();
   }
 }

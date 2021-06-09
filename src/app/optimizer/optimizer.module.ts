@@ -34,6 +34,7 @@ import { OperationsComponent } from './operations/operations.component';
 import { OptimizationComponent } from './optimization/optimization.component';
 
 import { MatListModule } from '@angular/material/list';
+import { GoogleChartsModule } from 'angular-google-charts';
 
 @NgModule({
   declarations: [
@@ -67,7 +68,8 @@ import { MatListModule } from '@angular/material/list';
     MatIconModule,
     MatExpansionModule,
     DragDropModule,
-    MatListModule
+    MatListModule,
+    GoogleChartsModule
   ],
 })
 export class OptimizerModule {}
