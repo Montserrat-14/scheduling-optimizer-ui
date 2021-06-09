@@ -50,10 +50,10 @@ export class SolutionComponent {
         station.machines.forEach((machine, index) => {
           machine.operations.forEach(operation => {
             currSolutionData.push([
-              station.machines.length > 1 ? machine.name + ' ' + index : machine.name,
-              operation.job + ' (' + operation.id + ')',
-              operation.startTime,
-              operation.endTime
+              station.machines.length > 1 ? machine.name + ' ' + (index + 1) : machine.name,
+              operation.job,
+              operation.startTime * 1000,
+              operation.endTime * 1000
             ]);
           });
         });

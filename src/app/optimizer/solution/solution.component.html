@@ -1,5 +1,5 @@
 <ng-container *ngFor="let solutionData of solutionsData; let i = index">
-  <h3>Solution {{ i + 1 }}:</h3>
+  <h2>Solution {{ i + 1 }}:</h2>
 
   <google-chart
     style="width: 100%;"
@@ -8,9 +8,11 @@
     [formatters]="myFormatters">
   </google-chart>
 
-  <h4>Objectives:</h4>
+  <h3>Objectives:</h3>
   <ng-container *ngFor="let objective of order.solutions[i].objectives">
-    <h5>{{ objective.name | titlecase }}: {{ objective.value }}</h5>
+    <h4>{{ objective.name | titlecase }}: {{ objective.value }}</h4>
   </ng-container>
-
+  <ng-container *ngIf="solutionsData.length > 1">
+    <hr>
+  </ng-container>
 </ng-container>
