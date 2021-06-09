@@ -1,10 +1,9 @@
-import { Variable } from "./variable.model";
-
 export class Objective {
-  variables: Array<Variable>;
+  name: string;
+  value: number;
 
   deserialize(input: any): this {
-    this.variables = input.map(elem => new Variable().deserialize(elem));
+    Object.assign(this, input);
     return this;
   }
 }

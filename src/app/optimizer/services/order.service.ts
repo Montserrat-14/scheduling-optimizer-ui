@@ -1,13 +1,12 @@
-import { Operation } from 'src/app/interfaces/Operation';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { Job } from 'src/app/interfaces/Job';
 import { Resource } from 'src/app/interfaces/Resource';
+import { FormGroup } from '@angular/forms';
+import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { Problem } from '../../models/problem.model';
+import { Order } from 'src/app/models/order.model';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -30,28 +29,30 @@ export interface OrderPayload {
   duration: number
 };
 
-@Injectable()
-export class ProblemService {
-  private problem = new BehaviorSubject<Problem>(null);
-  problem$ = this.problem.asObservable();
+@Injectable({
+  providedIn: 'root'
+})
+export class OrderService {
+  private order = new BehaviorSubject<Order>(null);
+  order$ = this.order.asObservable();
 
   constructor(private http: HttpClient) {}
 
   getSolution(
     fullForm: FormGroup
-  ): Observable<Problem> {
+  ): Observable<Order> {
     const bodyPayload = this.buildBodyPayload(fullForm);
 
     return this.http.post(environment.baseUrl + 'sheduling', bodyPayload, httpOptions)
       .pipe(
         map(resp => {
-          const problem = new Problem().deserialize(resp)
-          console.log(problem);
-          return problem;
+          const order = new Order().deserialize(resp);
+          console.log(order);
+          return order;
         }))
   }
 
-  buildBodyPayload(fullForm: FormGroup) {
+  private buildBodyPayload(fullForm: FormGroup) {
     const payload = {
       order: this.buildOrderPayload(fullForm.value),
       resource: this.buildResourcePayload(fullForm.get('resources').value),
@@ -60,7 +61,7 @@ export class ProblemService {
     return payload;
   }
 
-  buildOrderPayload(value: any): OrderPayload {
+  private buildOrderPayload(value: any): OrderPayload {
     let order: OrderPayload = {
       name: "",
       description: "",
@@ -83,7 +84,7 @@ export class ProblemService {
     return order;
   }
 
-  buildResourcePayload(resource: ResourcePayload): ResourcePayload {
+  private buildResourcePayload(resource: ResourcePayload): ResourcePayload {
     const currResource = resource;
 
     currResource.resources = resource.resources.filter(re =>
@@ -96,11 +97,11 @@ export class ProblemService {
     return currResource;
   }
 
-  setProblem(problem: Problem): void {
-    this.problem.next(problem);
+  setOrder(order: Order): void {
+    this.order.next(order);
   }
 
-  getProblem(): Problem {
-    return this.problem.getValue();
+  getOrder(): Order {
+    return this.order.getValue();
   }
 }

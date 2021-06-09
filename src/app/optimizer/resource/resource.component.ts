@@ -55,15 +55,25 @@ export class ResourcesComponent implements OnInit, OnDestroy {
 
     this.resourceSubscription = this.resourcesArrayForm$.subscribe(
       (resources: FormArray) => {
+        this.patchResourcesId();
         this.formsService.setResources(resources);
       }
     );
   }
 
-  createResourceItem(): FormGroup {
+  private patchResourcesId() {
+    this.resourcesArrayForm.controls.forEach((control, index) => {
+      control.patchValue({
+        id: index
+      }, { emitEvent: false });
+    });
+  }
+
+  private createResourceItem(): FormGroup {
+    const currentId = this.resourcesArrayForm.controls.length - 1;
     const formGroup = this._formBuilder.group(
       {
-        id: [this.formsService.getId()],
+        id: [currentId],
         name: [null, [Validators.required, Validators.maxLength(23)]],
         quantity: [null, [Validators.required]],
         cost: [null, [Validators.required]],
@@ -73,7 +83,6 @@ export class ResourcesComponent implements OnInit, OnDestroy {
         updateOn: 'blur',
       }
     );
-    this.formsService.increaseId();
     return formGroup;
   }
 
@@ -85,7 +94,7 @@ export class ResourcesComponent implements OnInit, OnDestroy {
     }
   }
 
-  checkAllFormControls(group: FormGroup | FormArray) {
+  private checkAllFormControls(group: FormGroup | FormArray) {
     Object.keys(group.controls).forEach((key) => {
       const currControl = group.get(key);
       if (currControl instanceof FormGroup) {

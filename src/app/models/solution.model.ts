@@ -1,10 +1,13 @@
-import { Variable } from "./variable.model";
+import { Objective } from "./objective.model";
+import { Station } from "./station.model";
 
 export class Solution {
-  variables: Array<Variable>;
+  stations: Array<Station>;
+  objectives: Array<Objective>;
 
   deserialize(input: any): this {
-    this.variables = input.map(elem => new Variable().deserialize(elem));
+    this.objectives = input.objectives.map(elem => new Objective().deserialize(elem));
+    this.stations = input.stations.map(elem => new Station().deserialize(elem));
     return this;
   }
 }
