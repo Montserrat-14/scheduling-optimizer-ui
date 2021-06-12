@@ -6,7 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ChartType } from 'angular-google-charts';
 import { OrderService } from '../services/order.service';
 import { Order } from 'src/app/models/order.model';
-import resultPayload from '../../../result_payload.json';
+//import resultPayload from '../../../result_payload.json';
 
 @Component({
   selector: 'app-solution',
@@ -31,8 +31,8 @@ export class SolutionComponent {
   ) {
 
     // To remove after testing (2 next lines)
-    this.order = new Order().deserialize(resultPayload);
-    this.orderService.setOrder(this.order);
+    //this.order = new Order().deserialize(resultPayload);
+    //this.orderService.setOrder(this.order);
 
     this.order = this.orderService.getOrder();
     if (this.order == null) {
