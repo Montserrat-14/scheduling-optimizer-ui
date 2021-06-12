@@ -30,10 +30,6 @@ export class SolutionComponent {
     public dialog: MatDialog
   ) {
 
-    // To remove after testing (2 next lines)
-    //this.order = new Order().deserialize(resultPayload);
-    //this.orderService.setOrder(this.order);
-
     this.order = this.orderService.getOrder();
     if (this.order == null) {
       this.router.navigateByUrl('optimizer/problem');

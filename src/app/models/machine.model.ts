@@ -5,8 +5,8 @@ export class Machine {
   operations: Array<Operation>;
 
   deserialize(input: any): this {
-    this.operations = input.operations.map(elem => new Operation().deserialize(elem));
     Object.assign(this, input);
+    this.operations = input.operations.map(elem => new Operation().deserialize(elem));
     return this;
   }
 }
