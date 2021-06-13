@@ -6,7 +6,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { ChartType } from 'angular-google-charts';
 import { OrderService } from '../services/order.service';
 import { Order } from 'src/app/models/order.model';
-//import resultPayload from '../../../result_payload.json';
 
 @Component({
   selector: 'app-solution',
@@ -43,10 +42,10 @@ export class SolutionComponent {
       const currSolutionData = [];
 
       solution.stations.forEach(station => {
-        station.machines.forEach((machine, index) => {
+        station.machines.forEach((machine) => {
           machine.operations.forEach(operation => {
             currSolutionData.push([
-              station.machines.length > 1 ? machine.name + ' ' + (index + 1) : machine.name,
+              machine.name,
               operation.job,
               operation.startTime * 1000,
               operation.endTime * 1000
