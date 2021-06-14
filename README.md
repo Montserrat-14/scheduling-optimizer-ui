@@ -1,8 +1,8 @@
-# Scheduling Optimizer API
+# Scheduling Optimizer UI
 ### Frontend for Scheduling Optimizer
-R&D funding agencies around the world, and especially in Europe, have highlighted the difficulty in achieving innovation and industrial productivity from research results. The difficulty of organizing, discovering and using the knowledge produced is felt not only by industry, but also by researchers and students, even in very focused areas of knowledge, such as multiobjective optimization. 
+*R&D funding agencies around the world, and especially in Europe, have highlighted the difficulty in achieving innovation and industrial productivity from research results. The difficulty of organizing, discovering and using the knowledge produced is felt not only by industry, but also by researchers and students, even in very focused areas of knowledge, such as multiobjective optimization.*
 
-With this in mind we developed a web application that enables the use of previously acquired knowledge in an easy and simple way. In our app the user can for example optimize industrial planning by putting the required data into a form and getting the results in a very visually pleasing way. 
+*With this in mind we developed a web application that enables the use of previously acquired knowledge in an easy and simple way. In our app the user can for example optimize industrial planning by putting the required data into a form and getting the results in a very visually pleasing way.*
 
 ## Structure of the Application
 ### Pages
@@ -17,7 +17,7 @@ The optimizer section of the application is divided in multiple tabs to allow th
 | Section |  Description  |
 | ------------------- | ------------------- |
 |  Order | The user indicates the name, the description of the order and the jobs that will be processed within that order. |
-|  Resources | The user indicates the resources that are available to process the order and to fulfill all the jobs. In each type of resource the user indicates the quantity available and the cost of each one. |
+|  Resources | The user indicates the resources that are available to process the order and to fulfill all the jobs. In each type of resource the user indicates the quantity available and the cost of each unit. |
 |  Operations | The user indicates the sequence of operations that each job requires. The order of the operations and the required time for each one matters and will be ensured by the algorithm and the solution presented. |
 |  Optimization | The user indicates which objectives are important for the solution and those objectives will be presented associated with each solution. |
 |  Duration | The user indicates the desired maximum duration of the process. |
