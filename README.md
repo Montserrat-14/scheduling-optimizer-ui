@@ -1,6 +1,8 @@
 # Scheduling Optimizer API
 ### Frontend for Scheduling Optimizer
+R&D funding agencies around the world, and especially in Europe, have highlighted the difficulty in achieving innovation and industrial productivity from research results. The difficulty of organizing, discovering and using the knowledge produced is felt not only by industry, but also by researchers and students, even in very focused areas of knowledge, such as multiobjective optimization. 
 
+With this in mind we developed a web application that enables the use of previously acquired knowledge in an easy and simple way. In our app the user can for example optimize industrial planning by putting the required data into a form and getting the results in a very visually pleasing way. 
 
 ## Structure of the Application
 ### Pages
